@@ -1,0 +1,38 @@
+model:
+  name: mnist_cnn_crown
+  path: models/my_models/simple_training/mnist_cnn_fast.pth
+
+data:
+  dataset: MNIST
+  mean: [0.0]
+  std: [1.0]
+  start: 0
+  end: 5
+
+specification:
+  norm: .inf
+  epsilon: 0.01
+
+attack:
+  pgd_steps: 100
+  pgd_restarts: 10
+
+solver:
+  batch_size: 1024
+  alpha-crown:
+    iteration: 100
+    lr_alpha: 0.1
+  beta-crown:
+    iteration: 20
+    lr_alpha: 0.01
+    lr_beta: 0.05
+
+bab:
+  timeout: 120
+  branching:
+    reduceop: min
+    method: kfsb
+    candidates: 3
+
+general:
+  device: cpu

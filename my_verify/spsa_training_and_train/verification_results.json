@@ -1,0 +1,74 @@
+[
+  {
+    "model": "MNIST_simple_CROWN-IBP_wcim_eps1",
+    "epsilon": 0.01,
+    "status": "completed",
+    "exit_code": 0,
+    "elapsed_time": 25.93,
+    "safe": 5,
+    "unsafe": 0,
+    "timeout": 0,
+    "verified_acc": 100.0,
+    "log_file": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\spsa_training\\log\\MNIST_simple_CROWN-IBP_wcim_eps1.log"
+  },
+  {
+    "model": "MNIST_simple_CROWN-IBP_wcim_eps3",
+    "epsilon": 0.03,
+    "status": "completed",
+    "exit_code": 0,
+    "elapsed_time": 14.75,
+    "safe": 5,
+    "unsafe": 0,
+    "timeout": 0,
+    "verified_acc": 100.0,
+    "log_file": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\spsa_training\\log\\MNIST_simple_CROWN-IBP_wcim_eps3.log"
+  },
+  {
+    "model": "MNIST_simple_CROWN-IBP_wcim_eps5",
+    "epsilon": 0.05,
+    "status": "completed",
+    "exit_code": 0,
+    "elapsed_time": 13.59,
+    "safe": 5,
+    "unsafe": 0,
+    "timeout": 0,
+    "verified_acc": 100.0,
+    "log_file": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\spsa_training\\log\\MNIST_simple_CROWN-IBP_wcim_eps5.log"
+  },
+  {
+    "model": "MNIST_simple_final_ibp_eps1",
+    "epsilon": 0.01,
+    "status": "completed",
+    "exit_code": 0,
+    "elapsed_time": 14.59,
+    "safe": 4,
+    "unsafe": 1,
+    "timeout": 0,
+    "verified_acc": 80.0,
+    "log_file": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\spsa_training\\log\\MNIST_simple_final_ibp_eps1.log"
+  },
+  {
+    "model": "MNIST_simple_final_ibp_eps3",
+    "epsilon": 0.03,
+    "status": "completed",
+    "exit_code": 0,
+    "elapsed_time": 13.66,
+    "safe": 4,
+    "unsafe": 1,
+    "timeout": 0,
+    "verified_acc": 80.0,
+    "log_file": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\spsa_training\\log\\MNIST_simple_final_ibp_eps3.log"
+  },
+  {
+    "model": "MNIST_simple_final_ibp_eps5",
+    "epsilon": 0.05,
+    "status": "completed",
+    "exit_code": 0,
+    "elapsed_time": 14.1,
+    "safe": 3,
+    "unsafe": 2,
+    "timeout": 0,
+    "verified_acc": 60.0,
+    "log_file": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\spsa_training\\log\\MNIST_simple_final_ibp_eps5.log"
+  }
+]

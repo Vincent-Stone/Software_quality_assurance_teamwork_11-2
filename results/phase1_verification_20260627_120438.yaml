@@ -1,0 +1,10 @@
+avg_margin: 1.1138396528363228
+avg_time: 0.26802099466323853
+epsilon: 0.1
+model_path: robustness_verification/test_models/MNIST_simple_final_ibp.pt
+num_samples: 100
+timeout_count: 0
+timeout_rate: 0.0
+timestamp: '20260627_120438'
+verified_count: 64
+verified_rate: 64.0

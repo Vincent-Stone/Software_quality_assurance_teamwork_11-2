@@ -1,0 +1,75 @@
+PS D:\学习\2026\软件质量保障\Software_quality_assurance_teamwork_11-2\robustness_verification> python -u train.py --model simple --lambda-weight 1.0 --bound-method alpha-CROWN --epochs 5
+Training on device: cpu
+Using robustness method: alpha-CROWN, epsilon=0.1, lambda_weight=1.0
+Training simple model on MNIST for 5 epochs...
+  Batch 50: Class Loss: 0.7047, Verify Loss: 0.2697, Bound Mean: 1.8409, λ: 1.0000
+  Batch 100: Class Loss: 0.3438, Verify Loss: 0.2426, Bound Mean: 2.3226, λ: 1.0000
+Epoch: 1/5, Batch: 100/469, Loss: 1.1684, Acc: 74.10%
+  Batch 150: Class Loss: 0.2655, Verify Loss: 0.1764, Bound Mean: 2.5733, λ: 1.0000
+  Batch 200: Class Loss: 0.3172, Verify Loss: 0.2861, Bound Mean: 2.4777, λ: 1.0000
+Epoch: 1/5, Batch: 200/469, Loss: 0.8826, Acc: 82.20%
+  Batch 250: Class Loss: 0.3247, Verify Loss: 0.3654, Bound Mean: 2.1810, λ: 1.0000
+  Batch 300: Class Loss: 0.2976, Verify Loss: 0.2969, Bound Mean: 2.4020, λ: 1.0000
+Epoch: 1/5, Batch: 300/469, Loss: 0.7834, Acc: 85.30%
+  Batch 350: Class Loss: 0.2700, Verify Loss: 0.2780, Bound Mean: 2.6350, λ: 1.0000
+  Batch 400: Class Loss: 0.1635, Verify Loss: 0.4127, Bound Mean: 2.2086, λ: 1.0000
+Epoch: 1/5, Batch: 400/469, Loss: 0.7291, Acc: 87.23%
+  Batch 450: Class Loss: 0.1931, Verify Loss: 0.3778, Bound Mean: 2.5957, λ: 1.0000
+Epoch 1: Train Acc: 88.15%, Test Acc: 94.06%, Avg Class Loss: 0.3986, Avg Verify Loss: 0.3090
+  Batch 50: Class Loss: 0.1802, Verify Loss: 0.4403, Bound Mean: 2.2680, λ: 1.0000
+  Batch 100: Class Loss: 0.2132, Verify Loss: 0.3980, Bound Mean: 2.3145, λ: 1.0000
+Epoch: 2/5, Batch: 100/469, Loss: 0.5715, Acc: 94.32%
+  Batch 150: Class Loss: 0.1654, Verify Loss: 0.3749, Bound Mean: 2.2925, λ: 1.0000
+  Batch 200: Class Loss: 0.1681, Verify Loss: 0.4904, Bound Mean: 2.1332, λ: 1.0000
+Epoch: 2/5, Batch: 200/469, Loss: 0.5760, Acc: 94.44%
+  Batch 250: Class Loss: 0.1715, Verify Loss: 0.3972, Bound Mean: 2.2583, λ: 1.0000
+  Batch 300: Class Loss: 0.2259, Verify Loss: 0.5485, Bound Mean: 2.1613, λ: 1.0000
+Epoch: 2/5, Batch: 300/469, Loss: 0.5844, Acc: 94.69%
+  Batch 350: Class Loss: 0.2212, Verify Loss: 0.5125, Bound Mean: 1.5161, λ: 1.0000
+  Batch 400: Class Loss: 0.2024, Verify Loss: 0.5153, Bound Mean: 2.1392, λ: 1.0000
+Epoch: 2/5, Batch: 400/469, Loss: 0.5944, Acc: 94.86%
+  Batch 450: Class Loss: 0.1755, Verify Loss: 0.5416, Bound Mean: 1.6739, λ: 1.0000
+Epoch 2: Train Acc: 94.92%, Test Acc: 95.61%, Avg Class Loss: 0.1720, Avg Verify Loss: 0.4358
+  Batch 50: Class Loss: 0.1468, Verify Loss: 0.4840, Bound Mean: 2.0370, λ: 1.0000
+  Batch 100: Class Loss: 0.3300, Verify Loss: 0.8786, Bound Mean: 1.1066, λ: 1.0000
+Epoch: 3/5, Batch: 100/469, Loss: 0.7034, Acc: 95.73%
+  Batch 150: Class Loss: 0.1081, Verify Loss: 0.5663, Bound Mean: 2.1186, λ: 1.0000
+  Batch 200: Class Loss: 0.1384, Verify Loss: 0.6378, Bound Mean: 1.2717, λ: 1.0000
+Epoch: 3/5, Batch: 200/469, Loss: 0.6971, Acc: 96.03%
+  Batch 250: Class Loss: 0.0645, Verify Loss: 0.5157, Bound Mean: 2.0433, λ: 1.0000
+  Batch 300: Class Loss: 0.0706, Verify Loss: 0.5582, Bound Mean: 2.3737, λ: 1.0000
+Epoch: 3/5, Batch: 300/469, Loss: 0.7153, Acc: 96.09%
+  Batch 350: Class Loss: 0.0941, Verify Loss: 0.7060, Bound Mean: 1.3975, λ: 1.0000
+  Batch 400: Class Loss: 0.1653, Verify Loss: 0.8238, Bound Mean: 1.1046, λ: 1.0000
+Epoch: 3/5, Batch: 400/469, Loss: 0.7320, Acc: 96.06%
+  Batch 450: Class Loss: 0.1141, Verify Loss: 0.7614, Bound Mean: 1.3372, λ: 1.0000
+Epoch 3: Train Acc: 96.09%, Test Acc: 96.46%, Avg Class Loss: 0.1273, Avg Verify Loss: 0.6129
+  Batch 50: Class Loss: 0.0917, Verify Loss: 0.6540, Bound Mean: 1.4781, λ: 1.0000
+  Batch 100: Class Loss: 0.0748, Verify Loss: 0.6796, Bound Mean: 1.4289, λ: 1.0000
+Epoch: 4/5, Batch: 100/469, Loss: 0.8025, Acc: 97.02%
+  Batch 150: Class Loss: 0.0915, Verify Loss: 0.7970, Bound Mean: 0.7944, λ: 1.0000
+  Batch 200: Class Loss: 0.1167, Verify Loss: 0.7564, Bound Mean: 0.9678, λ: 1.0000
+Epoch: 4/5, Batch: 200/469, Loss: 0.8341, Acc: 96.91%
+  Batch 250: Class Loss: 0.0550, Verify Loss: 0.7729, Bound Mean: 1.0775, λ: 1.0000
+  Batch 300: Class Loss: 0.1611, Verify Loss: 0.8764, Bound Mean: 0.8110, λ: 1.0000
+Epoch: 4/5, Batch: 300/469, Loss: 0.8554, Acc: 96.94%
+  Batch 350: Class Loss: 0.1047, Verify Loss: 0.8628, Bound Mean: 0.5483, λ: 1.0000
+  Batch 400: Class Loss: 0.1279, Verify Loss: 0.9320, Bound Mean: 0.8294, λ: 1.0000
+Epoch: 4/5, Batch: 400/469, Loss: 0.8801, Acc: 96.92%
+  Batch 450: Class Loss: 0.1434, Verify Loss: 0.7606, Bound Mean: 1.2057, λ: 1.0000
+Epoch 4: Train Acc: 96.96%, Test Acc: 96.91%, Avg Class Loss: 0.1022, Avg Verify Loss: 0.7914
+  Batch 50: Class Loss: 0.0817, Verify Loss: 0.8998, Bound Mean: 0.6274, λ: 1.0000
+  Batch 100: Class Loss: 0.1471, Verify Loss: 1.0628, Bound Mean: 0.0615, λ: 1.0000
+Epoch: 5/5, Batch: 100/469, Loss: 1.0109, Acc: 97.13%
+  Batch 150: Class Loss: 0.1306, Verify Loss: 1.1121, Bound Mean: -0.0147, λ: 1.0000
+  Batch 200: Class Loss: 0.1063, Verify Loss: 0.9966, Bound Mean: 0.6850, λ: 1.0000
+Epoch: 5/5, Batch: 200/469, Loss: 1.0116, Acc: 97.14%
+  Batch 250: Class Loss: 0.1282, Verify Loss: 1.0262, Bound Mean: 0.3940, λ: 1.0000
+  Batch 300: Class Loss: 0.0876, Verify Loss: 0.9967, Bound Mean: 0.6275, λ: 1.0000
+Epoch: 5/5, Batch: 300/469, Loss: 1.0198, Acc: 97.22%
+  Batch 350: Class Loss: 0.1069, Verify Loss: 0.9161, Bound Mean: 0.7148, λ: 1.0000
+  Batch 400: Class Loss: 0.0996, Verify Loss: 0.9325, Bound Mean: 0.8854, λ: 1.0000
+Epoch: 5/5, Batch: 400/469, Loss: 1.0271, Acc: 97.32%
+  Batch 450: Class Loss: 0.0338, Verify Loss: 1.2220, Bound Mean: -0.0828, λ: 1.0000
+Epoch 5: Train Acc: 97.35%, Test Acc: 96.93%, Avg Class Loss: 0.0863, Avg Verify Loss: 0.9578
+Model saved to ./models/MNIST_simple_alpha-CROWN.pt

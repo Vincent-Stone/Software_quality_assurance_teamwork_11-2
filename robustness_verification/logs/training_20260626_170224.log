@@ -1,0 +1,6 @@
+Training started at 2026-06-26T17:02:24.337330
+================================================================================
+[2026-06-26 17:02:34] [ALERT] Gradient norm too large: 7909.1043 > threshold 100.0
+[2026-06-26 17:03:40] [ALERT] Gradient norm too large: 10012.0720 > threshold 100.0
+[2026-06-26 17:04:46] [ALERT] Gradient norm too large: 5170.4260 > threshold 100.0
+[2026-06-26 17:05:50] [ALERT] Gradient norm too large: 486.3029 > threshold 100.0

@@ -1,0 +1,541 @@
+======================================================================
+VERIFICATION LOG
+======================================================================
+Timestamp: 2026-06-27 17:26:33
+Model: test_model_ibp
+Description: IBP robust trained MLP
+Epsilon: 0.03
+Config File: D:\ABCROWN\alpha-beta-CROWN\complete_verifier\my_verify\final_training/config/test_model_ibp_eps3.yaml
+Elapsed Time: 12.64 seconds
+Exit Code: 0
+======================================================================
+
+STDOUT:
+----------------------------------------
+Configurations:
+
+general:
+  device: cpu
+  seed: 100
+  conv_mode: patches
+  deterministic: false
+  double_fp: false
+  loss_reduction_func: sum
+  sparse_alpha: true
+  sparse_interm: true
+  save_adv_example: false
+  verify_onnxruntime_output: false
+  eval_adv_example: false
+  onnx_adv_example: false
+  show_adv_example: false
+  precompile_jit: false
+  reset_seed_after_precompile: false
+  prepare_only: false
+  complete_verifier: bab
+  enable_incomplete_verification: true
+  csv_name: null
+  results_file: out.txt
+  root_path: ''
+  deterministic_opt: false
+  graph_optimizer: 'Customized("custom_graph_optimizer", "default_optimizer")'
+  buffer_has_batchdim: false
+  save_output: false
+  output_file: out.pkl
+  return_optimized_model: false
+  store_all_specs_on_cpu: false
+  adhoc_tuning: null
+model:
+  name: final_training_mlp
+  path: models/my_models/final_training/test_model_ibp.pt
+  onnx_path: null
+  onnx_path_prefix: ''
+  cache_onnx_conversion: false
+  debug_onnx: false
+  onnx_quirks: null
+  input_shape: null
+  onnx_loader: default_onnx_and_vnnlib_loader
+  onnx_optimization_flags: []
+  onnx_vnnlib_joint_optimization_flags: none
+  check_optimized: false
+  flatten_final_output: false
+  optimize_graph: null
+  with_jacobian: false
+  bound_opts: null
+data:
+  start: 0
+  end: 5
+  select_instance: null
+  num_outputs: 10
+  mean: [0.0]
+  std: [1.0]
+  pkl_path: null
+  dataset: MNIST
+  data_filter_path: null
+  data_idx_file: null
+specification:
+  type: lp
+  robustness_type: verified-acc
+  norm: .inf
+  epsilon: 0.03
+  epsilon_min: 0.0
+  vnnlib_path: null
+  vnnlib_path_prefix: ''
+  shrink_eps: null
+  rhs_offset: null
+solver:
+  batch_size: 1024
+  auto_enlarge_batch_size: true
+  batched_crown_auto_enlarge_max_vram_ratio: 0.9
+  min_batch_size_ratio: 0.1
+  use_float64_in_last_iteration: false
+  early_stop_patience: 10
+  start_save_best: 0.5
+  bound_prop_method: alpha-crown
+  init_bound_prop_method: same
+  prune_after_crown: true
+  optimize_disjuncts_separately: false
+  build_batch_size: 1000000
+  skip_with_refined_bound: true
+  forward_before_compute_bounds: false
+  crown:
+    batch_size: 1000000000
+    max_crown_size: 1000000000
+    activation_bound_option: adaptive
+    compare_crown_with_ibp: false
+  alpha-crown:
+    alpha: true
+    lr_alpha: 0.1
+    iteration: 100
+    share_alphas: false
+    lr_decay: 0.98
+    full_conv_alpha: true
+    max_coeff_mul: .inf
+    matmul_share_alphas: false
+    disable_optimization: []
+    max_time: 1.0
+    alpha_dtype: float16
+    input_split_alpha_iteration: 5
+    input_split_lr_alpha: 0.05
+  invprop:
+    apply_output_constraints_to: []
+    tighten_input_bounds: false
+    best_of_oc_and_no_oc: false
+    directly_optimize: []
+    oc_lr: 0.1
+    share_gammas: false
+  beta-crown:
+    lr_alpha: 0.01
+    lr_beta: 0.05
+    lr_decay: 0.98
+    optimizer: adam
+    iteration: 20
+    beta: true
+    beta_warmup: true
+    enable_opt_interm_bounds: false
+    all_node_split_LP: false
+  forward:
+    refine: false
+    max_dim: 10000
+    reset_threshold: 1.0
+  mip:
+    unstable_neuron_threshold: 0
+    parallel_solvers: null
+    solver_threads: 1
+    refine_neuron_timeout: 15
+    refine_neuron_time_percentage: 0.8
+    early_stop: true
+    adv_warmup: true
+    mip_solver: gurobi
+    skip_unsafe: false
+    topk_filter: 1.0
+    sliding_window: -1
+    extra_constraint: false
+    refine_neuron_timeout_increasement: 0
+    timeout_neuron_percentage: 0.3
+    remaining_timeout_threshold: 1
+    remove_unstable_neurons: false
+    formulation: mip
+    output_cut: false
+bab:
+  max_domains: .inf
+  decision_thresh: 0
+  timeout: 120
+  timeout_scale: 1
+  max_iterations: -1
+  override_timeout: null
+  get_upper_bound: false
+  pruning_in_iteration: true
+  pruning_in_iteration_ratio: 0.2
+  sort_targets: false
+  batched_domain_list: true
+  optimized_interm: ''
+  interm_transfer: true
+  recompute_interm: false
+  sort_domain_interval: -1
+  vanilla_crown: false
+  tree_traversal: depth_first
+  hugetensor_allocator: true
+  cut:
+    enabled: false
+    cuts_path: null
+    bab_cut: false
+    lp_cut: false
+    lr: 0.01
+    lr_decay: 1.0
+    iteration: 100
+    bab_iteration: -1
+    early_stop_patience: -1
+    lr_beta: 0.02
+    number_cuts: 50
+    topk_cuts_in_filter: 1000
+    batch_size_primal: 100
+    max_num: 1000000000
+    patches_cut: false
+    cplex_cuts: false
+    cplex_cuts_wait: 0
+    cplex_cuts_revpickup: true
+    cut_reference_bounds: true
+    fix_intermediate_bounds: false
+    manual_cuts: null
+    biccos:
+      enabled: false
+      auto_param: true
+      constraint_strengthening: true
+      drop_ratio: 0.5
+      max_infer_iter: 20
+      max_domain: 10000.0
+      heuristic: neuron_influence_score
+      save_cuts: false
+      multi_tree_branching:
+        enabled: false
+        restore_best_tree: true
+        keep_n_best_domains: 50
+        target_batch_size: 200
+        iterations: 3
+  clip_n_verify:
+    rearrange_constraints: false
+    alpha_crown: false
+    prune: false
+    final_layer: false
+    clip_input_domain:
+      enabled: false
+      clip_type: relaxed
+      clip_neuron_selection_type: ratio
+      clip_neuron_selection_value: -1.0
+      clip_iterations: 1
+      clip_calculate_volume_metrics: false
+    clip_interm_domain:
+      enabled: false
+      with_input: false
+      clip_in_alpha_crown: false
+      topk_objective: 20
+  branching:
+    method: kfsb
+    candidates: 3
+    reduceop: min
+    enable_intermediate_bound_opt: false
+    branching_input_and_activation: false
+    branching_input_and_activation_order: [input, relu]
+    branching_input_iterations: 30
+    branching_relu_iterations: 50
+    nonlinear_split:
+      method: bbps
+      disable: false
+      branching_point_method: uniform
+      num_branches: 2
+      filter: false
+      filter_beta: false
+      filter_clamp: false
+      filter_batch_size: 10000
+      filter_iterations: 25
+      relu_only: false
+      loose_tanh_threshold: null
+      branching_point:
+        db_path: branching_points.pt
+        num_iterations: 1000
+        batch_size: 1000000
+        range_l: -5.0
+        range_u: 5.0
+        log_interval: 100
+        step_size_1d: 0.01
+        step_size: 0.2
+    input_split:
+      split_hint: null
+      enable: false
+      reorder_bab: false
+      input_dim_threshold: 20
+      adv_check: 0
+      split_partitions: 2
+      sb_margin_weight: 1.0
+      sb_sum: false
+      sb_primary_spec: null
+      bf_backup_thresh: -1
+      bf_rhs_offset: 0
+      bf_iters: 1000000000.0
+      bf_batch_size: 100000
+      bf_zero_crossing_score: false
+      touch_zero_score: 0
+      ibp_enhancement: true
+      compare_with_old_bounds: true
+      update_rhs_with_attack: false
+      sb_coeff_thresh: 0.001
+      sort_index: null
+      sort_descending: true
+      show_progress: false
+      presplit_domains: null
+      skip_getting_worst_domain: false
+  attack:
+    enabled: false
+    beam_candidates: 8
+    beam_depth: 7
+    max_dive_fix_ratio: 0.8
+    min_local_free_ratio: 0.2
+    mip_start_iteration: 5
+    mip_timeout: 30.0
+    adv_pool_threshold: null
+    refined_mip_attacker: false
+    refined_batch_size: null
+attack:
+  general_attack: true
+  pgd_order: before
+  pgd_steps: 100
+  pgd_restarts: 10
+  pgd_batch_size: 100000000
+  pgd_early_stop: true
+  pgd_lr_decay: 0.99
+  pgd_alpha: auto
+  pgd_alpha_scale: false
+  pgd_loss_mode: null
+  pgd_restart_when_stuck: false
+  enable_mip_attack: false
+  adv_saver: default_adv_saver
+  adv_verifier: default_adv_verifier
+  early_stop_condition: default_early_stop_condition
+  adv_example_finalizer: default_adv_example_finalizer
+  pgd_loss: default_pgd_loss
+  cex_path: ./test_cex.txt
+  attack_mode: PGD
+  attack_tolerance: 0.0
+  attack_func: attack_with_general_specs
+  gama_lambda: 10.0
+  gama_decay: 0.9
+  input_split:
+    pgd_steps: 100
+    pgd_restarts: 30
+    pgd_alpha: auto
+  input_split_check_adv:
+    enabled: auto
+    pgd_steps: 5
+    pgd_restarts: 5
+    pgd_alpha: auto
+    max_num_domains: 10
+debug:
+  view_model: false
+  lp_test: null
+  rescale_vnnlib_ptb: null
+  test_optimized_bounds: false
+  test_optimized_bounds_after_n_iterations: 0
+  print_verbose_decisions: false
+  biccos_mip_sanity_check: false
+  sanity_check: 0
+  z_split_enabled: false
+  save_minimal_config: null
+  save_minimal_config_omit_keys: []
+
+Experiments at Sat Jun 27 17:26:25 2026 on QHS
+Sequential(
+  (flatten): Flatten(start_dim=1, end_dim=-1)
+  (layers): Sequential(
+    (0): Linear(in_features=784, out_features=32, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=32, out_features=10, bias=True)
+  )
+)
+Parameters:
+  layers.0.weight: shape torch.Size([32, 784])
+  layers.0.bias: shape torch.Size([32])
+  layers.2.weight: shape torch.Size([10, 32])
+  layers.2.bias: shape torch.Size([10])
+Trying generic MNIST/CIFAR data loader.
+Internal results will be saved to out.txt.
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 0, vnnlib ID: 0 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.002040 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.007500000298023224, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[2.20961618, 4.11189842, 0.92696106, 0.20395947, 3.41870594, 2.36880922,
+         4.82063198, 1.51892018, 1.88468492]])
+Total number of violation:  0
+Processing batch 1/1...
+pgd early stop
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[ 1.67876744,  3.48418880,  0.46925044, -0.29618704,  2.66038823,
+          1.72440457,  3.98684025,  0.91243839,  1.31365287]])
+Total number of violation:  1
+Attack finished in 0.0136 seconds.
+PGD attack succeeded!
+
+Checking and Saving Counterexample in check_and_save_cex
+
+verified_status unsafe-pgd
+verified_success True
+Result: unsafe-pgd in 0.0161 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 1, vnnlib ID: 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000964 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.007500000298023224, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[1.55112362, 1.27569520, 0.92398870, 4.06429386, 1.20656013, 1.18325722,
+         4.49943209, 0.40647018, 3.06395197]])
+Total number of violation:  0
+Processing batch 1/1...
+pgd early stop
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[ 0.88116854,  0.90042526,  0.57309186,  3.15830588,  0.53457785,
+          0.47264364,  3.85889649, -0.11848640,  2.25363445]])
+Total number of violation:  1
+Attack finished in 0.0088 seconds.
+PGD attack succeeded!
+
+Checking and Saving Counterexample in check_and_save_cex
+
+verified_status unsafe-pgd
+verified_success True
+Result: unsafe-pgd in 0.0101 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 2, vnnlib ID: 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000880 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.007500000298023224, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[1.94175851, 0.77967083, 1.21706903, 1.36851335, 1.79544592, 1.52947032,
+         0.91807812, 0.83126450, 1.90392327]])
+Total number of violation:  0
+Processing batch 1/1...
+pgd early stop
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[ 1.28196359, -0.07332647,  0.50117999,  0.74892324,  1.25384307,
+          0.86375290,  0.39247420,  0.21187943,  1.17565155]])
+Total number of violation:  1
+Attack finished in 0.0077 seconds.
+PGD attack succeeded!
+
+Checking and Saving Counterexample in check_and_save_cex
+
+verified_status unsafe-pgd
+verified_success True
+Result: unsafe-pgd in 0.0088 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 3, vnnlib ID: 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000883 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.007500000298023224, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[4.48987246, 2.39263725, 3.15266705, 3.48210645, 2.65303421, 2.10682464,
+         3.44635463, 2.73265791, 2.81773376]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[3.84269595, 1.90142584, 2.40553522, 2.80261087, 1.93267775, 1.57829225,
+         2.84808421, 2.06065941, 2.21739101]])
+Total number of violation:  0
+Attack finished in 0.2377 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundFlatten(name=/5, inputs=[/0], perturbed=True)
+  (/input): BoundLinear(name=/input, inputs=[/5, /1, /2], perturbed=True)
+  (/7): BoundRelu(name=/7, inputs=[/input], perturbed=True)
+  (/8): BoundLinear(name=/8, inputs=[/7, /3, /4], perturbed=True)
+)
+Original output in the first batch: tensor([[ 2.05527353, -2.46526432, -0.36099854, -1.15922534, -1.42348444,
+         -0.64114368, -0.05742211, -1.52229381, -0.60089755, -0.77261084]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/7, inputs=[/input], perturbed=True)
+build batch [1/1]
+layer /7 using sparse-features alpha with shape [7]; unstable size 7; total size 32 ([1, 32])
+layer /7 start_node /8 using full alpha [2, 9, 1, 7] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [3.7390644550323486, 1.8631505966186523, 2.3012874126434326, 2.7086710929870605, 1.7841432094573975, 1.5016415119171143, 2.7211530208587646, 1.9616676568984985, 2.1101791858673096]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 0.2790 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 4, vnnlib ID: 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000838 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.007500000298023224, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[2.20316529, 3.08494735, 1.90830004, 2.58444166, 1.61089718, 2.00607681,
+         1.95184326, 1.27396977, 0.69772685]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[1.52106881, 2.48146725, 1.34089375, 1.98377240, 1.00975680, 1.20605338,
+         1.45050800, 0.60963875, 0.19944590]])
+Total number of violation:  0
+Attack finished in 0.2700 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundFlatten(name=/5, inputs=[/0], perturbed=True)
+  (/input): BoundLinear(name=/input, inputs=[/5, /1, /2], perturbed=True)
+  (/7): BoundRelu(name=/7, inputs=[/input], perturbed=True)
+  (/8): BoundLinear(name=/8, inputs=[/7, /3, /4], perturbed=True)
+)
+Original output in the first batch: tensor([[-0.79642445, -1.70858121, -0.57392001, -1.20434296,  1.32705736,
+         -0.25010204, -0.57434833, -0.63890117,  0.14288682,  0.63885123]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/7, inputs=[/input], perturbed=True)
+build batch [1/1]
+layer /7 using sparse-features alpha with shape [9]; unstable size 9; total size 32 ([1, 32])
+layer /7 start_node /8 using full alpha [2, 9, 1, 9] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [1.4027096033096313, 2.425377368927002, 1.2448939085006714, 1.8824045658111572, 0.8484168648719788, 1.0700364112854004, 1.3876906633377075, 0.4498695135116577, 0.10409875214099884]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 0.2850 seconds
+############# Summary #############
+Final verified acc: 40.0% (total 5 examples)
+Problem instances count: 5 , total verified (safe/unsat): 2 , total falsified (unsafe/sat): 3 , timeout: 0
+mean time for ALL instances (total 5):0.11980461955213786, max time: 0.28503870964050293
+mean time for verified SAFE instances(total 2): 0.28203725814819336, max time: 0.28503870964050293
+mean time for verified (SAFE + UNSAFE) instances (total 5): 0.11980485916137695, max time: 0.28503870964050293
+mean time for verified UNSAFE instances (total 3): 0.01164992650349935, max time: 0.016053199768066406
+unsafe-pgd (total 3), index: [0, 1, 2]
+safe-incomplete (total 2), index: [3, 4]
+
+STDERR:
+----------------------------------------
+D:\ABCROWN\alpha-beta-CROWN\complete_verifier\specifications.py:342: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:256.)
+  x_range_list = torch.Tensor(x_range_list).to(dtype=dtype, device=device).view(input_shape + [2])
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+  1%|          | 1/100 [00:00<00:00, 149.05it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+  1%|          | 1/100 [00:00<00:00, 197.62it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+  1%|          | 1/100 [00:00<00:00, 235.79it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+ 42%|████▏     | 42/100 [00:00<00:00, 419.80it/s]
+ 86%|████████▌ | 86/100 [00:00<00:00, 428.91it/s]
+100%|██████████| 100/100 [00:00<00:00, 427.99it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+ 28%|██▊       | 28/100 [00:00<00:00, 279.27it/s]
+ 72%|███████▏  | 72/100 [00:00<00:00, 369.93it/s]
+100%|██████████| 100/100 [00:00<00:00, 375.68it/s]

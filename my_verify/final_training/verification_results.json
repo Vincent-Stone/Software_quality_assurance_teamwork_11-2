@@ -1,0 +1,101 @@
+[
+  {
+    "model": "test_model",
+    "description": "Standard trained MLP",
+    "epsilon": 0.01,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 100.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):2.1993239285310984, max time: 2.4543662071228027",
+    "status": "safe-incomplete (total 4), index: [1, 2, 3, 4]",
+    "elapsed_time": 30.42652916908264,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_model_eps1.log"
+  },
+  {
+    "model": "test_model",
+    "description": "Standard trained MLP",
+    "epsilon": 0.03,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 40.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):0.6691101520293298, max time: 2.216081142425537",
+    "status": "safe-incomplete (total 2), index: [3, 4]",
+    "elapsed_time": 23.785523414611816,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_model_eps3.log"
+  },
+  {
+    "model": "test_model",
+    "description": "Standard trained MLP",
+    "epsilon": 0.05,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 20.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):0.06377493501116514, max time: 0.2795853614807129",
+    "status": "safe-incomplete (total 1), index: [3]",
+    "elapsed_time": 14.12814712524414,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_model_eps5.log"
+  },
+  {
+    "model": "test_model_ibp",
+    "description": "IBP robust trained MLP",
+    "epsilon": 0.01,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 100.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):0.32247097371039635, max time: 0.5288412570953369",
+    "status": "safe-incomplete (total 4), index: [1, 2, 3, 4]",
+    "elapsed_time": 14.061987161636353,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_model_ibp_eps1.log"
+  },
+  {
+    "model": "test_model_ibp",
+    "description": "IBP robust trained MLP",
+    "epsilon": 0.03,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 40.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):0.11980461955213786, max time: 0.28503870964050293",
+    "status": "safe-incomplete (total 2), index: [3, 4]",
+    "elapsed_time": 12.64378046989441,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_model_ibp_eps3.log"
+  },
+  {
+    "model": "test_model_ibp",
+    "description": "IBP robust trained MLP",
+    "epsilon": 0.05,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 20.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):0.07530330856086336, max time: 0.2855846881866455",
+    "status": "safe-incomplete (total 1), index: [3]",
+    "elapsed_time": 12.811869621276855,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_model_ibp_eps5.log"
+  },
+  {
+    "model": "test_spsa_model_ibp",
+    "description": "SPSA+IBP robust trained MLP",
+    "epsilon": 0.01,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 100.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):0.2976945168393599, max time: 0.43623781204223633",
+    "status": "safe-incomplete (total 4), index: [1, 2, 3, 4]",
+    "elapsed_time": 13.855247497558594,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_spsa_model_ibp_eps1.log"
+  },
+  {
+    "model": "test_spsa_model_ibp",
+    "description": "SPSA+IBP robust trained MLP",
+    "epsilon": 0.03,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 40.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):0.1305504572065807, max time: 0.31355738639831543",
+    "status": "safe-incomplete (total 2), index: [3, 4]",
+    "elapsed_time": 14.545990228652954,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_spsa_model_ibp_eps3.log"
+  },
+  {
+    "model": "test_spsa_model_ibp",
+    "description": "SPSA+IBP robust trained MLP",
+    "epsilon": 0.05,
+    "return_code": 0,
+    "accuracy": "Final verified acc: 20.0% (total 5 examples)",
+    "avg_time": "mean time for ALL instances (total 5):0.07418875161639325, max time: 0.32500433921813965",
+    "status": "safe-incomplete (total 1), index: [3]",
+    "elapsed_time": 13.291657209396362,
+    "log_path": "D:\\ABCROWN\\alpha-beta-CROWN\\complete_verifier\\my_verify\\final_training/log/test_spsa_model_ibp_eps5.log"
+  }
+]

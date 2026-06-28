@@ -1,0 +1,649 @@
+=== VERIFICATION START: 2026-06-27 19:38:43 ===
+Model: MNIST_simple_CROWN-IBP_wcim_eps5
+Epsilon: 0.05
+Config file: D:\ABCROWN\alpha-beta-CROWN\complete_verifier\my_verify\spsa_training\config\MNIST_simple_CROWN-IBP_wcim_eps5.yaml
+
+=== STDOUT ===
+Configurations:
+
+general:
+  device: cpu
+  seed: 100
+  conv_mode: patches
+  deterministic: false
+  double_fp: false
+  loss_reduction_func: sum
+  sparse_alpha: true
+  sparse_interm: true
+  save_adv_example: false
+  verify_onnxruntime_output: false
+  eval_adv_example: false
+  onnx_adv_example: false
+  show_adv_example: false
+  precompile_jit: false
+  reset_seed_after_precompile: false
+  prepare_only: false
+  complete_verifier: bab
+  enable_incomplete_verification: true
+  csv_name: null
+  results_file: out.txt
+  root_path: ''
+  deterministic_opt: false
+  graph_optimizer: 'Customized("custom_graph_optimizer", "default_optimizer")'
+  buffer_has_batchdim: false
+  save_output: false
+  output_file: out.pkl
+  return_optimized_model: false
+  store_all_specs_on_cpu: false
+  adhoc_tuning: null
+model:
+  name: spsa_training_mlp
+  path: models/my_models/spsa_training/MNIST_simple_CROWN-IBP_wcim.pt
+  onnx_path: null
+  onnx_path_prefix: ''
+  cache_onnx_conversion: false
+  debug_onnx: false
+  onnx_quirks: null
+  input_shape: null
+  onnx_loader: default_onnx_and_vnnlib_loader
+  onnx_optimization_flags: []
+  onnx_vnnlib_joint_optimization_flags: none
+  check_optimized: false
+  flatten_final_output: false
+  optimize_graph: null
+  with_jacobian: false
+  bound_opts: null
+data:
+  start: 0
+  end: 5
+  select_instance: null
+  num_outputs: 10
+  mean: [0.0]
+  std: [1.0]
+  pkl_path: null
+  dataset: MNIST
+  data_filter_path: null
+  data_idx_file: null
+specification:
+  type: lp
+  robustness_type: verified-acc
+  norm: .inf
+  epsilon: 0.05
+  epsilon_min: 0.0
+  vnnlib_path: null
+  vnnlib_path_prefix: ''
+  shrink_eps: null
+  rhs_offset: null
+solver:
+  batch_size: 1024
+  auto_enlarge_batch_size: true
+  batched_crown_auto_enlarge_max_vram_ratio: 0.9
+  min_batch_size_ratio: 0.1
+  use_float64_in_last_iteration: false
+  early_stop_patience: 10
+  start_save_best: 0.5
+  bound_prop_method: alpha-crown
+  init_bound_prop_method: same
+  prune_after_crown: true
+  optimize_disjuncts_separately: false
+  build_batch_size: 1000000
+  skip_with_refined_bound: true
+  forward_before_compute_bounds: false
+  crown:
+    batch_size: 1000000000
+    max_crown_size: 1000000000
+    activation_bound_option: adaptive
+    compare_crown_with_ibp: false
+  alpha-crown:
+    alpha: true
+    lr_alpha: 0.1
+    iteration: 100
+    share_alphas: false
+    lr_decay: 0.98
+    full_conv_alpha: true
+    max_coeff_mul: .inf
+    matmul_share_alphas: false
+    disable_optimization: []
+    max_time: 1.0
+    alpha_dtype: float16
+    input_split_alpha_iteration: 5
+    input_split_lr_alpha: 0.05
+  invprop:
+    apply_output_constraints_to: []
+    tighten_input_bounds: false
+    best_of_oc_and_no_oc: false
+    directly_optimize: []
+    oc_lr: 0.1
+    share_gammas: false
+  beta-crown:
+    lr_alpha: 0.01
+    lr_beta: 0.05
+    lr_decay: 0.98
+    optimizer: adam
+    iteration: 20
+    beta: true
+    beta_warmup: true
+    enable_opt_interm_bounds: false
+    all_node_split_LP: false
+  forward:
+    refine: false
+    max_dim: 10000
+    reset_threshold: 1.0
+  mip:
+    unstable_neuron_threshold: 0
+    parallel_solvers: null
+    solver_threads: 1
+    refine_neuron_timeout: 15
+    refine_neuron_time_percentage: 0.8
+    early_stop: true
+    adv_warmup: true
+    mip_solver: gurobi
+    skip_unsafe: false
+    topk_filter: 1.0
+    sliding_window: -1
+    extra_constraint: false
+    refine_neuron_timeout_increasement: 0
+    timeout_neuron_percentage: 0.3
+    remaining_timeout_threshold: 1
+    remove_unstable_neurons: false
+    formulation: mip
+    output_cut: false
+bab:
+  max_domains: .inf
+  decision_thresh: 0
+  timeout: 120
+  timeout_scale: 1
+  max_iterations: -1
+  override_timeout: null
+  get_upper_bound: false
+  pruning_in_iteration: true
+  pruning_in_iteration_ratio: 0.2
+  sort_targets: false
+  batched_domain_list: true
+  optimized_interm: ''
+  interm_transfer: true
+  recompute_interm: false
+  sort_domain_interval: -1
+  vanilla_crown: false
+  tree_traversal: depth_first
+  hugetensor_allocator: true
+  cut:
+    enabled: false
+    cuts_path: null
+    bab_cut: false
+    lp_cut: false
+    lr: 0.01
+    lr_decay: 1.0
+    iteration: 100
+    bab_iteration: -1
+    early_stop_patience: -1
+    lr_beta: 0.02
+    number_cuts: 50
+    topk_cuts_in_filter: 1000
+    batch_size_primal: 100
+    max_num: 1000000000
+    patches_cut: false
+    cplex_cuts: false
+    cplex_cuts_wait: 0
+    cplex_cuts_revpickup: true
+    cut_reference_bounds: true
+    fix_intermediate_bounds: false
+    manual_cuts: null
+    biccos:
+      enabled: false
+      auto_param: true
+      constraint_strengthening: true
+      drop_ratio: 0.5
+      max_infer_iter: 20
+      max_domain: 10000.0
+      heuristic: neuron_influence_score
+      save_cuts: false
+      multi_tree_branching:
+        enabled: false
+        restore_best_tree: true
+        keep_n_best_domains: 50
+        target_batch_size: 200
+        iterations: 3
+  clip_n_verify:
+    rearrange_constraints: false
+    alpha_crown: false
+    prune: false
+    final_layer: false
+    clip_input_domain:
+      enabled: false
+      clip_type: relaxed
+      clip_neuron_selection_type: ratio
+      clip_neuron_selection_value: -1.0
+      clip_iterations: 1
+      clip_calculate_volume_metrics: false
+    clip_interm_domain:
+      enabled: false
+      with_input: false
+      clip_in_alpha_crown: false
+      topk_objective: 20
+  branching:
+    method: kfsb
+    candidates: 3
+    reduceop: min
+    enable_intermediate_bound_opt: false
+    branching_input_and_activation: false
+    branching_input_and_activation_order: [input, relu]
+    branching_input_iterations: 30
+    branching_relu_iterations: 50
+    nonlinear_split:
+      method: bbps
+      disable: false
+      branching_point_method: uniform
+      num_branches: 2
+      filter: false
+      filter_beta: false
+      filter_clamp: false
+      filter_batch_size: 10000
+      filter_iterations: 25
+      relu_only: false
+      loose_tanh_threshold: null
+      branching_point:
+        db_path: branching_points.pt
+        num_iterations: 1000
+        batch_size: 1000000
+        range_l: -5.0
+        range_u: 5.0
+        log_interval: 100
+        step_size_1d: 0.01
+        step_size: 0.2
+    input_split:
+      split_hint: null
+      enable: false
+      reorder_bab: false
+      input_dim_threshold: 20
+      adv_check: 0
+      split_partitions: 2
+      sb_margin_weight: 1.0
+      sb_sum: false
+      sb_primary_spec: null
+      bf_backup_thresh: -1
+      bf_rhs_offset: 0
+      bf_iters: 1000000000.0
+      bf_batch_size: 100000
+      bf_zero_crossing_score: false
+      touch_zero_score: 0
+      ibp_enhancement: true
+      compare_with_old_bounds: true
+      update_rhs_with_attack: false
+      sb_coeff_thresh: 0.001
+      sort_index: null
+      sort_descending: true
+      show_progress: false
+      presplit_domains: null
+      skip_getting_worst_domain: false
+  attack:
+    enabled: false
+    beam_candidates: 8
+    beam_depth: 7
+    max_dive_fix_ratio: 0.8
+    min_local_free_ratio: 0.2
+    mip_start_iteration: 5
+    mip_timeout: 30.0
+    adv_pool_threshold: null
+    refined_mip_attacker: false
+    refined_batch_size: null
+attack:
+  general_attack: true
+  pgd_order: before
+  pgd_steps: 100
+  pgd_restarts: 10
+  pgd_batch_size: 100000000
+  pgd_early_stop: true
+  pgd_lr_decay: 0.99
+  pgd_alpha: auto
+  pgd_alpha_scale: false
+  pgd_loss_mode: null
+  pgd_restart_when_stuck: false
+  enable_mip_attack: false
+  adv_saver: default_adv_saver
+  adv_verifier: default_adv_verifier
+  early_stop_condition: default_early_stop_condition
+  adv_example_finalizer: default_adv_example_finalizer
+  pgd_loss: default_pgd_loss
+  cex_path: ./test_cex.txt
+  attack_mode: PGD
+  attack_tolerance: 0.0
+  attack_func: attack_with_general_specs
+  gama_lambda: 10.0
+  gama_decay: 0.9
+  input_split:
+    pgd_steps: 100
+    pgd_restarts: 30
+    pgd_alpha: auto
+  input_split_check_adv:
+    enabled: auto
+    pgd_steps: 5
+    pgd_restarts: 5
+    pgd_alpha: auto
+    max_num_domains: 10
+debug:
+  view_model: false
+  lp_test: null
+  rescale_vnnlib_ptb: null
+  test_optimized_bounds: false
+  test_optimized_bounds_after_n_iterations: 0
+  print_verbose_decisions: false
+  biccos_mip_sanity_check: false
+  sanity_check: 0
+  z_split_enabled: false
+  save_minimal_config: null
+  save_minimal_config_omit_keys: []
+
+Experiments at Sat Jun 27 19:38:34 2026 on QHS
+Sequential(
+  (flatten): Flatten(start_dim=1, end_dim=-1)
+  (layers): Sequential(
+    (0): Linear(in_features=784, out_features=64, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=64, out_features=32, bias=True)
+    (3): ReLU()
+    (4): Linear(in_features=32, out_features=10, bias=True)
+  )
+)
+Parameters:
+  layers.0.weight: shape torch.Size([64, 784])
+  layers.0.bias: shape torch.Size([64])
+  layers.2.weight: shape torch.Size([32, 64])
+  layers.2.bias: shape torch.Size([32])
+  layers.4.weight: shape torch.Size([10, 32])
+  layers.4.bias: shape torch.Size([10])
+Trying generic MNIST/CIFAR data loader.
+Internal results will be saved to out.txt.
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 0, vnnlib ID: 0 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.001602 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.012500002980232239, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.76701522, 1.04047930, 0.83654803, 0.86296594, 0.99047291, 1.00331652,
+         1.00819218, 0.97180456, 0.92785519]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.63356203, 0.97370499, 0.70524108, 0.76177424, 0.92811221, 0.93584657,
+         0.94130594, 0.86071360, 0.83632612]])
+Total number of violation:  0
+Attack finished in 0.3055 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundFlatten(name=/7, inputs=[/0], perturbed=True)
+  (/input): BoundLinear(name=/input, inputs=[/7, /1, /2], perturbed=True)
+  (/9): BoundRelu(name=/9, inputs=[/input], perturbed=True)
+  (/input-3): BoundLinear(name=/input-3, inputs=[/9, /3, /4], perturbed=True)
+  (/11): BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+  (/12): BoundLinear(name=/12, inputs=[/11, /5, /6], perturbed=True)
+)
+Original output in the first batch: tensor([[ 0.28568715, -0.01339182,  0.21572952,  0.17593393,  0.03852605,
+          0.02456906,  0.02031515,  1.05046535,  0.07411450,  0.10027108]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/9, inputs=[/input], perturbed=True)
+   BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+build batch [1/1]
+layer /9 using sparse-features alpha with shape [7]; unstable size 7; total size 64 ([1, 64])
+layer /9 start_node /input-3 using sparse-spec alpha [2, 1, 1, 7] with unstable size 0 total_size 32 output_shape torch.Size([32])
+layer /9 start_node /12 using full alpha [2, 9, 1, 7] with unstable size None total_size 9 output_shape 9
+layer /11 using sparse-features alpha with shape [0]; unstable size 0; total size 32 ([1, 32])
+layer /11 start_node /12 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [0.6097408533096313, 0.9688339829444885, 0.6816437244415283, 0.743728518486023, 0.9280897378921509, 0.9357958436012268, 0.941261887550354, 0.8459476828575134, 0.8127555847167969]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 0.3476 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 1, vnnlib ID: 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000995 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.012500002980232239, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.26335371, 0.61395603, 0.35105419, 0.56166929, 0.61042166, 0.14476272,
+         0.58456349, 0.48137468, 0.61671931]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.08188605, 0.56889427, 0.22313929, 0.47989327, 0.55256039, 0.02742773,
+         0.52492404, 0.36615962, 0.55478728]])
+Total number of violation:  0
+Attack finished in 0.2896 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundFlatten(name=/7, inputs=[/0], perturbed=True)
+  (/input): BoundLinear(name=/input, inputs=[/7, /1, /2], perturbed=True)
+  (/9): BoundRelu(name=/9, inputs=[/input], perturbed=True)
+  (/input-3): BoundLinear(name=/input-3, inputs=[/9, /3, /4], perturbed=True)
+  (/11): BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+  (/12): BoundLinear(name=/12, inputs=[/11, /5, /6], perturbed=True)
+)
+Original output in the first batch: tensor([[ 4.04750288e-01,  1.35182757e-02,  6.58939004e-01,  3.04469347e-01,
+          8.22168142e-02,  4.69483435e-04,  4.99763221e-01,  2.34194919e-02,
+          1.41995609e-01, -7.52912927e-03]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/9, inputs=[/input], perturbed=True)
+   BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+build batch [1/1]
+layer /9 using sparse-features alpha with shape [12]; unstable size 12; total size 64 ([1, 64])
+layer /9 start_node /input-3 using sparse-spec alpha [2, 1, 1, 12] with unstable size 0 total_size 32 output_shape torch.Size([32])
+layer /9 start_node /12 using full alpha [2, 9, 1, 12] with unstable size None total_size 9 output_shape 9
+layer /11 using sparse-features alpha with shape [0]; unstable size 0; total size 32 ([1, 32])
+layer /11 start_node /12 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [0.053902678191661835, 0.5488007068634033, 0.15837666392326355, 0.46580928564071655, 0.5392574667930603, -0.0016569755971431732, 0.5231714248657227, 0.32253745198249817, 0.5520980358123779]
+prune_after_crown optimization in use
+  original spec size = torch.Size([1, 9])
+  pruned spec size = torch.Size([1, 1])
+Using alpha-CROWN to initialize bounds.
+
+all verified at 2th iter
+best_l after optimization: 0.0006240736693143845
+alpha/beta optimization time: 0.017019271850585938
+initial alpha-crown bounds (first 10 items): [0.0006240736693143845]
+Global lower bound: 0.0006240736693143845
+torch.Size([1, 1])
+verified with init bound!
+Result: safe-incomplete in 0.3298 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 2, vnnlib ID: 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000868 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.012500002980232239, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.79098761, 0.60075855, 0.67770022, 0.79279262, 0.76679397, 0.64300239,
+         0.63522696, 0.73241830, 0.74874413]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.68913108, 0.46846965, 0.56354237, 0.72892797, 0.70296204, 0.52144629,
+         0.52055001, 0.61591804, 0.64513415]])
+Total number of violation:  0
+Attack finished in 0.2669 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundFlatten(name=/7, inputs=[/0], perturbed=True)
+  (/input): BoundLinear(name=/input, inputs=[/7, /1, /2], perturbed=True)
+  (/9): BoundRelu(name=/9, inputs=[/input], perturbed=True)
+  (/input-3): BoundLinear(name=/input-3, inputs=[/9, /3, /4], perturbed=True)
+  (/11): BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+  (/12): BoundLinear(name=/12, inputs=[/11, /5, /6], perturbed=True)
+)
+Original output in the first batch: tensor([[-0.01062362,  0.81683809,  0.21909817,  0.12548180, -0.00189676,
+          0.03089335,  0.16342354,  0.17448685,  0.09015833,  0.01752491]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/9, inputs=[/input], perturbed=True)
+   BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+build batch [1/1]
+layer /9 using sparse-features alpha with shape [17]; unstable size 17; total size 64 ([1, 64])
+layer /9 start_node /input-3 using sparse-spec alpha [2, 2, 1, 17] with unstable size 1 total_size 32 output_shape torch.Size([32])
+layer /9 start_node /12 using full alpha [2, 9, 1, 17] with unstable size None total_size 9 output_shape 9
+layer /11 using sparse-features alpha with shape [1]; unstable size 1; total size 32 ([1, 32])
+layer /11 start_node /12 using full alpha [2, 9, 1, 1] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [0.48482462763786316, 0.4005277156829834, 0.3304097056388855, 0.6125338673591614, 0.36414241790771484, 0.29005441069602966, 0.42116475105285645, 0.39016368985176086, 0.4209586977958679]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 0.2902 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 3, vnnlib ID: 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.001117 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.012500002980232239, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.93939900, 0.70047355, 0.89114201, 0.91596484, 0.90538937, 0.62108982,
+         0.55622160, 0.89529604, 0.84153527]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.89570630, 0.57485211, 0.78855228, 0.87215137, 0.86103243, 0.50830787,
+         0.45418924, 0.80776429, 0.75358784]])
+Total number of violation:  0
+Attack finished in 0.3312 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundFlatten(name=/7, inputs=[/0], perturbed=True)
+  (/input): BoundLinear(name=/input, inputs=[/7, /1, /2], perturbed=True)
+  (/9): BoundRelu(name=/9, inputs=[/input], perturbed=True)
+  (/input-3): BoundLinear(name=/input-3, inputs=[/9, /3, /4], perturbed=True)
+  (/11): BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+  (/12): BoundLinear(name=/12, inputs=[/11, /5, /6], perturbed=True)
+)
+Original output in the first batch: tensor([[ 0.95513707, -0.01928828,  0.24304219,  0.04152666,  0.00531070,
+          0.01551165,  0.30608824,  0.37053448,  0.04564056,  0.07752109]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/9, inputs=[/input], perturbed=True)
+   BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+build batch [1/1]
+layer /9 using sparse-features alpha with shape [2]; unstable size 2; total size 64 ([1, 64])
+layer /9 start_node /12 using full alpha [2, 9, 1, 2] with unstable size None total_size 9 output_shape 9
+layer /11 using sparse-features alpha with shape [0]; unstable size 0; total size 32 ([1, 32])
+layer /11 start_node /12 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [0.8955758810043335, 0.5745075941085815, 0.7828406095504761, 0.8721515536308289, 0.8607525825500488, 0.5080693364143372, 0.45377326011657715, 0.8076142072677612, 0.7515354156494141]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 0.3487 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 4, vnnlib ID: 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000808 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.012500002980232239, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.41345549, 0.49992660, 0.29729414, 0.47810811, 0.47632289, 0.39589712,
+         0.26265073, 0.37899399, 0.34826970]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[0.26216054, 0.42191616, 0.15091047, 0.39532799, 0.39532396, 0.27747536,
+         0.10767782, 0.24822903, 0.26078570]])
+Total number of violation:  0
+Attack finished in 0.2783 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundFlatten(name=/7, inputs=[/0], perturbed=True)
+  (/input): BoundLinear(name=/input, inputs=[/7, /1, /2], perturbed=True)
+  (/9): BoundRelu(name=/9, inputs=[/input], perturbed=True)
+  (/input-3): BoundLinear(name=/input-3, inputs=[/9, /3, /4], perturbed=True)
+  (/11): BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+  (/12): BoundLinear(name=/12, inputs=[/11, /5, /6], perturbed=True)
+)
+Original output in the first batch: tensor([[1.07521236e-01, 5.00680413e-04, 2.29255885e-01, 2.35057101e-02,
+         5.10987222e-01, 2.46262923e-02, 1.12775795e-01, 2.45695442e-01,
+         1.43077657e-01, 1.50439903e-01]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/9, inputs=[/input], perturbed=True)
+   BoundRelu(name=/11, inputs=[/input-3], perturbed=True)
+build batch [1/1]
+layer /9 using sparse-features alpha with shape [5]; unstable size 5; total size 64 ([1, 64])
+layer /9 start_node /12 using full alpha [2, 9, 1, 5] with unstable size None total_size 9 output_shape 9
+layer /11 using sparse-features alpha with shape [0]; unstable size 0; total size 32 ([1, 32])
+layer /11 start_node /12 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [0.2574593126773834, 0.42050567269325256, 0.15060842037200928, 0.3536860942840576, 0.3948432505130768, 0.26436781883239746, 0.10763803124427795, 0.24285653233528137, 0.25117942690849304]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 0.2950 seconds
+############# Summary #############
+Final verified acc: 100.0% (total 5 examples)
+Problem instances count: 5 , total verified (safe/unsat): 5 , total falsified (unsafe/sat): 0 , timeout: 0
+mean time for ALL instances (total 5):0.3222619287183301, max time: 0.3487110137939453
+mean time for verified SAFE instances(total 5): 0.3222625732421875, max time: 0.3487110137939453
+safe-incomplete (total 5), index: [0, 1, 2, 3, 4]
+
+=== STDERR ===
+D:\ABCROWN\alpha-beta-CROWN\complete_verifier\specifications.py:342: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:256.)
+  x_range_list = torch.Tensor(x_range_list).to(dtype=dtype, device=device).view(input_shape + [2])
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+ 27%|¨€¨€¨ƒ       | 27/100 [00:00<00:00, 264.49it/s]
+ 65%|¨€¨€¨€¨€¨€¨€¨„   | 65/100 [00:00<00:00, 328.28it/s]
+100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 100/100 [00:00<00:00, 335.42it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+ 40%|¨€¨€¨€¨€      | 40/100 [00:00<00:00, 387.32it/s]
+ 79%|¨€¨€¨€¨€¨€¨€¨€¨  | 79/100 [00:00<00:00, 343.95it/s]
+100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 100/100 [00:00<00:00, 350.74it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+ 41%|¨€¨€¨€¨€      | 41/100 [00:00<00:00, 408.81it/s]
+ 82%|¨€¨€¨€¨€¨€¨€¨€¨€¨‡ | 82/100 [00:00<00:00, 378.53it/s]
+100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 100/100 [00:00<00:00, 382.16it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+ 30%|¨€¨€¨€       | 30/100 [00:00<00:00, 293.69it/s]
+ 64%|¨€¨€¨€¨€¨€¨€¨…   | 64/100 [00:00<00:00, 314.32it/s]
+ 96%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨„| 96/100 [00:00<00:00, 303.42it/s]
+100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 100/100 [00:00<00:00, 306.74it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+ 33%|¨€¨€¨€¨†      | 33/100 [00:00<00:00, 328.46it/s]
+ 74%|¨€¨€¨€¨€¨€¨€¨€¨…  | 74/100 [00:00<00:00, 373.17it/s]
+100%|¨€¨€¨€¨€¨€¨€¨€¨€¨€¨€| 100/100 [00:00<00:00, 364.50it/s]
+
+=== VERIFICATION END: 2026-06-27 19:38:43 ===

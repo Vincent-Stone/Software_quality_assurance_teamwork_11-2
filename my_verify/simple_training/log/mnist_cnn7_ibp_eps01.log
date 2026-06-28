@@ -1,0 +1,1299 @@
+STDOUT:
+Configurations:
+
+general:
+  device: cpu
+  seed: 100
+  conv_mode: patches
+  deterministic: false
+  double_fp: false
+  loss_reduction_func: sum
+  sparse_alpha: true
+  sparse_interm: true
+  save_adv_example: false
+  verify_onnxruntime_output: false
+  eval_adv_example: false
+  onnx_adv_example: false
+  show_adv_example: false
+  precompile_jit: false
+  reset_seed_after_precompile: false
+  prepare_only: false
+  complete_verifier: bab
+  enable_incomplete_verification: true
+  csv_name: null
+  results_file: out.txt
+  root_path: ''
+  deterministic_opt: false
+  graph_optimizer: 'Customized("custom_graph_optimizer", "default_optimizer")'
+  buffer_has_batchdim: false
+  save_output: false
+  output_file: out.pkl
+  return_optimized_model: false
+  store_all_specs_on_cpu: false
+  adhoc_tuning: null
+model:
+  name: mnist_cnn7_ibp_eps01
+  path: models/my_models/simple_training/mnist_cnn7_ibp_eps01.pth
+  onnx_path: null
+  onnx_path_prefix: ''
+  cache_onnx_conversion: false
+  debug_onnx: false
+  onnx_quirks: null
+  input_shape: null
+  onnx_loader: default_onnx_and_vnnlib_loader
+  onnx_optimization_flags: []
+  onnx_vnnlib_joint_optimization_flags: none
+  check_optimized: false
+  flatten_final_output: false
+  optimize_graph: null
+  with_jacobian: false
+  bound_opts: null
+data:
+  start: 0
+  end: 5
+  select_instance: null
+  num_outputs: 10
+  mean: [0.0]
+  std: [1.0]
+  pkl_path: null
+  dataset: MNIST
+  data_filter_path: null
+  data_idx_file: null
+specification:
+  type: lp
+  robustness_type: verified-acc
+  norm: .inf
+  epsilon: 0.01
+  epsilon_min: 0.0
+  vnnlib_path: null
+  vnnlib_path_prefix: ''
+  shrink_eps: null
+  rhs_offset: null
+solver:
+  batch_size: 1024
+  auto_enlarge_batch_size: true
+  batched_crown_auto_enlarge_max_vram_ratio: 0.9
+  min_batch_size_ratio: 0.1
+  use_float64_in_last_iteration: false
+  early_stop_patience: 10
+  start_save_best: 0.5
+  bound_prop_method: alpha-crown
+  init_bound_prop_method: same
+  prune_after_crown: true
+  optimize_disjuncts_separately: false
+  build_batch_size: 1000000
+  skip_with_refined_bound: true
+  forward_before_compute_bounds: false
+  crown:
+    batch_size: 1000000000
+    max_crown_size: 1000000000
+    activation_bound_option: adaptive
+    compare_crown_with_ibp: false
+  alpha-crown:
+    alpha: true
+    lr_alpha: 0.1
+    iteration: 100
+    share_alphas: false
+    lr_decay: 0.98
+    full_conv_alpha: true
+    max_coeff_mul: .inf
+    matmul_share_alphas: false
+    disable_optimization: []
+    max_time: 1.0
+    alpha_dtype: float16
+    input_split_alpha_iteration: 5
+    input_split_lr_alpha: 0.05
+  invprop:
+    apply_output_constraints_to: []
+    tighten_input_bounds: false
+    best_of_oc_and_no_oc: false
+    directly_optimize: []
+    oc_lr: 0.1
+    share_gammas: false
+  beta-crown:
+    lr_alpha: 0.01
+    lr_beta: 0.05
+    lr_decay: 0.98
+    optimizer: adam
+    iteration: 20
+    beta: true
+    beta_warmup: true
+    enable_opt_interm_bounds: false
+    all_node_split_LP: false
+  forward:
+    refine: false
+    max_dim: 10000
+    reset_threshold: 1.0
+  mip:
+    unstable_neuron_threshold: 0
+    parallel_solvers: null
+    solver_threads: 1
+    refine_neuron_timeout: 15
+    refine_neuron_time_percentage: 0.8
+    early_stop: true
+    adv_warmup: true
+    mip_solver: gurobi
+    skip_unsafe: false
+    topk_filter: 1.0
+    sliding_window: -1
+    extra_constraint: false
+    refine_neuron_timeout_increasement: 0
+    timeout_neuron_percentage: 0.3
+    remaining_timeout_threshold: 1
+    remove_unstable_neurons: false
+    formulation: mip
+    output_cut: false
+bab:
+  max_domains: .inf
+  decision_thresh: 0
+  timeout: 120
+  timeout_scale: 1
+  max_iterations: -1
+  override_timeout: null
+  get_upper_bound: false
+  pruning_in_iteration: true
+  pruning_in_iteration_ratio: 0.2
+  sort_targets: false
+  batched_domain_list: true
+  optimized_interm: ''
+  interm_transfer: true
+  recompute_interm: false
+  sort_domain_interval: -1
+  vanilla_crown: false
+  tree_traversal: depth_first
+  hugetensor_allocator: true
+  cut:
+    enabled: false
+    cuts_path: null
+    bab_cut: false
+    lp_cut: false
+    lr: 0.01
+    lr_decay: 1.0
+    iteration: 100
+    bab_iteration: -1
+    early_stop_patience: -1
+    lr_beta: 0.02
+    number_cuts: 50
+    topk_cuts_in_filter: 1000
+    batch_size_primal: 100
+    max_num: 1000000000
+    patches_cut: false
+    cplex_cuts: false
+    cplex_cuts_wait: 0
+    cplex_cuts_revpickup: true
+    cut_reference_bounds: true
+    fix_intermediate_bounds: false
+    manual_cuts: null
+    biccos:
+      enabled: false
+      auto_param: true
+      constraint_strengthening: true
+      drop_ratio: 0.5
+      max_infer_iter: 20
+      max_domain: 10000.0
+      heuristic: neuron_influence_score
+      save_cuts: false
+      multi_tree_branching:
+        enabled: false
+        restore_best_tree: true
+        keep_n_best_domains: 50
+        target_batch_size: 200
+        iterations: 3
+  clip_n_verify:
+    rearrange_constraints: false
+    alpha_crown: false
+    prune: false
+    final_layer: false
+    clip_input_domain:
+      enabled: false
+      clip_type: relaxed
+      clip_neuron_selection_type: ratio
+      clip_neuron_selection_value: -1.0
+      clip_iterations: 1
+      clip_calculate_volume_metrics: false
+    clip_interm_domain:
+      enabled: false
+      with_input: false
+      clip_in_alpha_crown: false
+      topk_objective: 20
+  branching:
+    method: kfsb
+    candidates: 3
+    reduceop: min
+    enable_intermediate_bound_opt: false
+    branching_input_and_activation: false
+    branching_input_and_activation_order: [input, relu]
+    branching_input_iterations: 30
+    branching_relu_iterations: 50
+    nonlinear_split:
+      method: bbps
+      disable: false
+      branching_point_method: uniform
+      num_branches: 2
+      filter: false
+      filter_beta: false
+      filter_clamp: false
+      filter_batch_size: 10000
+      filter_iterations: 25
+      relu_only: false
+      loose_tanh_threshold: null
+      branching_point:
+        db_path: branching_points.pt
+        num_iterations: 1000
+        batch_size: 1000000
+        range_l: -5.0
+        range_u: 5.0
+        log_interval: 100
+        step_size_1d: 0.01
+        step_size: 0.2
+    input_split:
+      split_hint: null
+      enable: false
+      reorder_bab: false
+      input_dim_threshold: 20
+      adv_check: 0
+      split_partitions: 2
+      sb_margin_weight: 1.0
+      sb_sum: false
+      sb_primary_spec: null
+      bf_backup_thresh: -1
+      bf_rhs_offset: 0
+      bf_iters: 1000000000.0
+      bf_batch_size: 100000
+      bf_zero_crossing_score: false
+      touch_zero_score: 0
+      ibp_enhancement: true
+      compare_with_old_bounds: true
+      update_rhs_with_attack: false
+      sb_coeff_thresh: 0.001
+      sort_index: null
+      sort_descending: true
+      show_progress: false
+      presplit_domains: null
+      skip_getting_worst_domain: false
+  attack:
+    enabled: false
+    beam_candidates: 8
+    beam_depth: 7
+    max_dive_fix_ratio: 0.8
+    min_local_free_ratio: 0.2
+    mip_start_iteration: 5
+    mip_timeout: 30.0
+    adv_pool_threshold: null
+    refined_mip_attacker: false
+    refined_batch_size: null
+attack:
+  general_attack: true
+  pgd_order: before
+  pgd_steps: 100
+  pgd_restarts: 10
+  pgd_batch_size: 100000000
+  pgd_early_stop: true
+  pgd_lr_decay: 0.99
+  pgd_alpha: auto
+  pgd_alpha_scale: false
+  pgd_loss_mode: null
+  pgd_restart_when_stuck: false
+  enable_mip_attack: false
+  adv_saver: default_adv_saver
+  adv_verifier: default_adv_verifier
+  early_stop_condition: default_early_stop_condition
+  adv_example_finalizer: default_adv_example_finalizer
+  pgd_loss: default_pgd_loss
+  cex_path: ./test_cex.txt
+  attack_mode: PGD
+  attack_tolerance: 0.0
+  attack_func: attack_with_general_specs
+  gama_lambda: 10.0
+  gama_decay: 0.9
+  input_split:
+    pgd_steps: 100
+    pgd_restarts: 30
+    pgd_alpha: auto
+  input_split_check_adv:
+    enabled: auto
+    pgd_steps: 5
+    pgd_restarts: 5
+    pgd_alpha: auto
+    max_num_domains: 10
+debug:
+  view_model: false
+  lp_test: null
+  rescale_vnnlib_ptb: null
+  test_optimized_bounds: false
+  test_optimized_bounds_after_n_iterations: 0
+  print_verbose_decisions: false
+  biccos_mip_sanity_check: false
+  sanity_check: 0
+  z_split_enabled: false
+  save_minimal_config: null
+  save_minimal_config_omit_keys: []
+
+Experiments at Sat Jun 27 17:00:07 2026 on QHS
+Sequential(
+  (0): Conv2d(1, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (1): ReLU()
+  (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (3): ReLU()
+  (4): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+  (5): ReLU()
+  (6): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (7): ReLU()
+  (8): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  (9): ReLU()
+  (10): Flatten(start_dim=1, end_dim=-1)
+  (11): Linear(in_features=25088, out_features=512, bias=True)
+  (12): ReLU()
+  (13): Linear(in_features=512, out_features=10, bias=True)
+)
+Parameters:
+  0.weight: shape torch.Size([64, 1, 3, 3])
+  0.bias: shape torch.Size([64])
+  2.weight: shape torch.Size([64, 64, 3, 3])
+  2.bias: shape torch.Size([64])
+  4.weight: shape torch.Size([128, 64, 3, 3])
+  4.bias: shape torch.Size([128])
+  6.weight: shape torch.Size([128, 128, 3, 3])
+  6.bias: shape torch.Size([128])
+  8.weight: shape torch.Size([128, 128, 3, 3])
+  8.bias: shape torch.Size([128])
+  11.weight: shape torch.Size([512, 25088])
+  11.bias: shape torch.Size([512])
+  13.weight: shape torch.Size([10, 512])
+  13.bias: shape torch.Size([10])
+Trying generic MNIST/CIFAR data loader.
+Internal results will be saved to out.txt.
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 0, vnnlib ID: 0 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.002768 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.0025000013411045074, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[42.91367722, 24.67071342, 21.41941071, 10.86961555, 36.81426239,
+         27.16071510, 61.62410355, 23.52079773, 21.78507423]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[42.42184448, 24.41398239, 21.27551270, 10.70425606, 36.43425751,
+         26.64390564, 61.01557922, 23.21564865, 21.49270248]])
+Total number of violation:  0
+Attack finished in 10.8677 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/input-1): BoundInput(name=/input-1, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundParams(name=/7, inputs=[], perturbed=False)
+  (/8): BoundParams(name=/8, inputs=[], perturbed=False)
+  (/9): BoundParams(name=/9, inputs=[], perturbed=False)
+  (/10): BoundParams(name=/10, inputs=[], perturbed=False)
+  (/11): BoundParams(name=/11, inputs=[], perturbed=False)
+  (/12): BoundParams(name=/12, inputs=[], perturbed=False)
+  (/13): BoundParams(name=/13, inputs=[], perturbed=False)
+  (/14): BoundParams(name=/14, inputs=[], perturbed=False)
+  (/input): BoundConv(name=/input, inputs=[/input-1, /1, /2], perturbed=True)
+  (/input-4): BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+  (/input-8): BoundConv(name=/input-8, inputs=[/input-4, /3, /4], perturbed=True)
+  (/input-12): BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+  (/input-16): BoundConv(name=/input-16, inputs=[/input-12, /5, /6], perturbed=True)
+  (/input-20): BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+  (/input-24): BoundConv(name=/input-24, inputs=[/input-20, /7, /8], perturbed=True)
+  (/input-28): BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+  (/input-32): BoundConv(name=/input-32, inputs=[/input-28, /9, /10], perturbed=True)
+  (/24): BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+  (/25): BoundFlatten(name=/25, inputs=[/24], perturbed=True)
+  (/input-36): BoundLinear(name=/input-36, inputs=[/25, /11, /12], perturbed=True)
+  (/27): BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+  (/28): BoundLinear(name=/28, inputs=[/27, /13, /14], perturbed=True)
+)
+Original output in the first batch: tensor([[-22.39517403,  -3.98598075,  -0.67618442,  10.03101635, -16.30559540,
+          -6.43973255, -41.41200256,  21.04638481,  -2.75703430,  -1.02447891]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+   BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+   BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+   BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+   BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+   BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+build batch [1/1]
+layer /input-4 using sparse-features alpha with shape [163]; unstable size 163; total size 50176 ([1, 64, 28, 28])
+layer /input-4 start_node /input-8 using sparse-spec alpha [2, 109, 1, 163] with unstable size 108 total_size 50176 output_shape (64, 28, 28)
+layer /input-4 start_node /input-16 using sparse-spec alpha [2, 48, 1, 163] with unstable size 47 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-24 using sparse-spec alpha [2, 38, 1, 163] with unstable size 37 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-32 using sparse-spec alpha [2, 11, 1, 163] with unstable size 10 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /28 using full alpha [2, 9, 1, 163] with unstable size None total_size 9 output_shape 9
+layer /input-12 using sparse-features alpha with shape [108]; unstable size 108; total size 50176 ([1, 64, 28, 28])
+layer /input-12 start_node /input-16 using sparse-spec alpha [2, 48, 1, 108] with unstable size 47 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-24 using sparse-spec alpha [2, 38, 1, 108] with unstable size 37 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-32 using sparse-spec alpha [2, 11, 1, 108] with unstable size 10 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /28 using full alpha [2, 9, 1, 108] with unstable size None total_size 9 output_shape 9
+layer /input-20 using sparse-features alpha with shape [47]; unstable size 47; total size 25088 ([1, 128, 14, 14])
+layer /input-20 start_node /input-24 using sparse-spec alpha [2, 38, 1, 47] with unstable size 37 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /input-32 using sparse-spec alpha [2, 11, 1, 47] with unstable size 10 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /28 using full alpha [2, 9, 1, 47] with unstable size None total_size 9 output_shape 9
+layer /input-28 using sparse-features alpha with shape [37]; unstable size 37; total size 25088 ([1, 128, 14, 14])
+layer /input-28 start_node /input-32 using sparse-spec alpha [2, 11, 1, 37] with unstable size 10 total_size 25088 output_shape (128, 14, 14)
+layer /input-28 start_node /28 using full alpha [2, 9, 1, 37] with unstable size None total_size 9 output_shape 9
+layer /24 using sparse-features alpha with shape [10]; unstable size 10; total size 25088 ([1, 128, 14, 14])
+layer /24 start_node /28 using full alpha [2, 9, 1, 10] with unstable size None total_size 9 output_shape 9
+layer /27 using sparse-features alpha with shape [0]; unstable size 0; total size 512 ([1, 512])
+layer /27 start_node /28 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [42.41492462158203, 24.40894317626953, 21.27191162109375, 10.699800491333008, 36.4273796081543, 26.63615608215332, 61.00714874267578, 23.210962295532227, 21.487586975097656]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 11.0401 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 1, vnnlib ID: 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000894 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.0025000013411045074, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[49.07342529, 10.89878082, 13.17298889, 49.05796051, 48.57953262,
+         27.53503990, 26.67947960, 18.75987625, 82.51013947]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[48.50612640, 10.85389519, 12.92880154, 48.67917633, 48.06207657,
+         27.17390823, 26.53472328, 18.48159790, 81.73690796]])
+Total number of violation:  0
+Attack finished in 11.0919 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/input-1): BoundInput(name=/input-1, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundParams(name=/7, inputs=[], perturbed=False)
+  (/8): BoundParams(name=/8, inputs=[], perturbed=False)
+  (/9): BoundParams(name=/9, inputs=[], perturbed=False)
+  (/10): BoundParams(name=/10, inputs=[], perturbed=False)
+  (/11): BoundParams(name=/11, inputs=[], perturbed=False)
+  (/12): BoundParams(name=/12, inputs=[], perturbed=False)
+  (/13): BoundParams(name=/13, inputs=[], perturbed=False)
+  (/14): BoundParams(name=/14, inputs=[], perturbed=False)
+  (/input): BoundConv(name=/input, inputs=[/input-1, /1, /2], perturbed=True)
+  (/input-4): BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+  (/input-8): BoundConv(name=/input-8, inputs=[/input-4, /3, /4], perturbed=True)
+  (/input-12): BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+  (/input-16): BoundConv(name=/input-16, inputs=[/input-12, /5, /6], perturbed=True)
+  (/input-20): BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+  (/input-24): BoundConv(name=/input-24, inputs=[/input-20, /7, /8], perturbed=True)
+  (/input-28): BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+  (/input-32): BoundConv(name=/input-32, inputs=[/input-28, /9, /10], perturbed=True)
+  (/24): BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+  (/25): BoundFlatten(name=/25, inputs=[/24], perturbed=True)
+  (/input-36): BoundLinear(name=/input-36, inputs=[/25, /11, /12], perturbed=True)
+  (/27): BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+  (/28): BoundLinear(name=/28, inputs=[/27, /13, /14], perturbed=True)
+)
+Original output in the first batch: tensor([[-22.29998398,  16.34729958,  27.39239693,  14.02848339, -22.28402901,
+         -21.75584412,  -0.49395859,   0.36399901,   8.37782764, -56.10855103]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+   BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+   BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+   BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+   BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+   BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+build batch [1/1]
+layer /input-4 using sparse-features alpha with shape [223]; unstable size 223; total size 50176 ([1, 64, 28, 28])
+layer /input-4 start_node /input-8 using sparse-spec alpha [2, 114, 1, 223] with unstable size 113 total_size 50176 output_shape (64, 28, 28)
+layer /input-4 start_node /input-16 using sparse-spec alpha [2, 87, 1, 223] with unstable size 86 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-24 using sparse-spec alpha [2, 42, 1, 223] with unstable size 41 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-32 using sparse-spec alpha [2, 21, 1, 223] with unstable size 20 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /28 using full alpha [2, 9, 1, 223] with unstable size None total_size 9 output_shape 9
+layer /input-12 using sparse-features alpha with shape [113]; unstable size 113; total size 50176 ([1, 64, 28, 28])
+layer /input-12 start_node /input-16 using sparse-spec alpha [2, 87, 1, 113] with unstable size 86 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-24 using sparse-spec alpha [2, 42, 1, 113] with unstable size 41 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-32 using sparse-spec alpha [2, 21, 1, 113] with unstable size 20 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /28 using full alpha [2, 9, 1, 113] with unstable size None total_size 9 output_shape 9
+layer /input-20 using sparse-features alpha with shape [86]; unstable size 86; total size 25088 ([1, 128, 14, 14])
+layer /input-20 start_node /input-24 using sparse-spec alpha [2, 42, 1, 86] with unstable size 41 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /input-32 using sparse-spec alpha [2, 21, 1, 86] with unstable size 20 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /28 using full alpha [2, 9, 1, 86] with unstable size None total_size 9 output_shape 9
+layer /input-28 using sparse-features alpha with shape [41]; unstable size 41; total size 25088 ([1, 128, 14, 14])
+layer /input-28 start_node /input-32 using sparse-spec alpha [2, 21, 1, 41] with unstable size 20 total_size 25088 output_shape (128, 14, 14)
+layer /input-28 start_node /28 using full alpha [2, 9, 1, 41] with unstable size None total_size 9 output_shape 9
+layer /24 using sparse-features alpha with shape [20]; unstable size 20; total size 25088 ([1, 128, 14, 14])
+layer /24 start_node /28 using full alpha [2, 9, 1, 20] with unstable size None total_size 9 output_shape 9
+layer /27 using sparse-features alpha with shape [0]; unstable size 0; total size 512 ([1, 512])
+layer /27 start_node /28 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [48.49931335449219, 10.852898597717285, 12.927101135253906, 48.67269515991211, 48.05769348144531, 27.170852661132812, 26.532188415527344, 18.479473114013672, 81.72402954101562]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 11.2537 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 2, vnnlib ID: 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000877 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.0025000013411045074, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[25.09385300, 21.43394089, 18.81449509, 15.54105091, 23.30804634,
+         18.45833588, 13.27783680, 14.24228191, 16.40090179]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[24.87233353, 21.30525208, 18.65533829, 15.41686249, 23.18603134,
+         18.31144714, 13.15560913, 14.12450790, 16.20209885]])
+Total number of violation:  0
+Attack finished in 10.9019 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/input-1): BoundInput(name=/input-1, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundParams(name=/7, inputs=[], perturbed=False)
+  (/8): BoundParams(name=/8, inputs=[], perturbed=False)
+  (/9): BoundParams(name=/9, inputs=[], perturbed=False)
+  (/10): BoundParams(name=/10, inputs=[], perturbed=False)
+  (/11): BoundParams(name=/11, inputs=[], perturbed=False)
+  (/12): BoundParams(name=/12, inputs=[], perturbed=False)
+  (/13): BoundParams(name=/13, inputs=[], perturbed=False)
+  (/14): BoundParams(name=/14, inputs=[], perturbed=False)
+  (/input): BoundConv(name=/input, inputs=[/input-1, /1, /2], perturbed=True)
+  (/input-4): BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+  (/input-8): BoundConv(name=/input-8, inputs=[/input-4, /3, /4], perturbed=True)
+  (/input-12): BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+  (/input-16): BoundConv(name=/input-16, inputs=[/input-12, /5, /6], perturbed=True)
+  (/input-20): BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+  (/input-24): BoundConv(name=/input-24, inputs=[/input-20, /7, /8], perturbed=True)
+  (/input-28): BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+  (/input-32): BoundConv(name=/input-32, inputs=[/input-28, /9, /10], perturbed=True)
+  (/24): BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+  (/25): BoundFlatten(name=/25, inputs=[/24], perturbed=True)
+  (/input-36): BoundLinear(name=/input-36, inputs=[/25, /11, /12], perturbed=True)
+  (/27): BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+  (/28): BoundLinear(name=/28, inputs=[/27, /13, /14], perturbed=True)
+)
+Original output in the first batch: tensor([[-12.68342495,  12.74789238,  -9.00207806,  -6.32362843,  -3.00252295,
+         -10.89581394,  -5.95821190,  -0.72672021,  -1.68144178,  -3.86844277]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+   BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+   BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+   BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+   BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+   BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+build batch [1/1]
+layer /input-4 using sparse-features alpha with shape [110]; unstable size 110; total size 50176 ([1, 64, 28, 28])
+layer /input-4 start_node /input-8 using sparse-spec alpha [2, 76, 1, 110] with unstable size 75 total_size 50176 output_shape (64, 28, 28)
+layer /input-4 start_node /input-16 using sparse-spec alpha [2, 26, 1, 110] with unstable size 25 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-24 using sparse-spec alpha [2, 41, 1, 110] with unstable size 40 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-32 using sparse-spec alpha [2, 6, 1, 110] with unstable size 5 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /28 using full alpha [2, 9, 1, 110] with unstable size None total_size 9 output_shape 9
+layer /input-12 using sparse-features alpha with shape [75]; unstable size 75; total size 50176 ([1, 64, 28, 28])
+layer /input-12 start_node /input-16 using sparse-spec alpha [2, 26, 1, 75] with unstable size 25 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-24 using sparse-spec alpha [2, 41, 1, 75] with unstable size 40 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-32 using sparse-spec alpha [2, 6, 1, 75] with unstable size 5 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /28 using full alpha [2, 9, 1, 75] with unstable size None total_size 9 output_shape 9
+layer /input-20 using sparse-features alpha with shape [25]; unstable size 25; total size 25088 ([1, 128, 14, 14])
+layer /input-20 start_node /input-24 using sparse-spec alpha [2, 41, 1, 25] with unstable size 40 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /input-32 using sparse-spec alpha [2, 6, 1, 25] with unstable size 5 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /28 using full alpha [2, 9, 1, 25] with unstable size None total_size 9 output_shape 9
+layer /input-28 using sparse-features alpha with shape [40]; unstable size 40; total size 25088 ([1, 128, 14, 14])
+layer /input-28 start_node /input-32 using sparse-spec alpha [2, 6, 1, 40] with unstable size 5 total_size 25088 output_shape (128, 14, 14)
+layer /input-28 start_node /28 using full alpha [2, 9, 1, 40] with unstable size None total_size 9 output_shape 9
+layer /24 using sparse-features alpha with shape [5]; unstable size 5; total size 25088 ([1, 128, 14, 14])
+layer /24 start_node /28 using full alpha [2, 9, 1, 5] with unstable size None total_size 9 output_shape 9
+layer /27 using sparse-features alpha with shape [0]; unstable size 0; total size 512 ([1, 512])
+layer /27 start_node /28 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [24.86980438232422, 21.30347442626953, 18.653812408447266, 15.415644645690918, 23.183576583862305, 18.3099422454834, 13.153961181640625, 14.123357772827148, 16.200469970703125]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 11.0604 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 3, vnnlib ID: 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.001048 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.0025000013411045074, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[17.35896873, 13.27560711, 12.48904610,  9.97003174, 10.72836018,
+          8.61285400, 13.01303387, 12.30398178,  7.62863493]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[16.74654388, 12.74033642, 12.00073051,  9.62687874, 10.32158279,
+          8.25710487, 12.64831161, 11.87340927,  7.35240269]])
+Total number of violation:  0
+Attack finished in 12.4336 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/input-1): BoundInput(name=/input-1, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundParams(name=/7, inputs=[], perturbed=False)
+  (/8): BoundParams(name=/8, inputs=[], perturbed=False)
+  (/9): BoundParams(name=/9, inputs=[], perturbed=False)
+  (/10): BoundParams(name=/10, inputs=[], perturbed=False)
+  (/11): BoundParams(name=/11, inputs=[], perturbed=False)
+  (/12): BoundParams(name=/12, inputs=[], perturbed=False)
+  (/13): BoundParams(name=/13, inputs=[], perturbed=False)
+  (/14): BoundParams(name=/14, inputs=[], perturbed=False)
+  (/input): BoundConv(name=/input, inputs=[/input-1, /1, /2], perturbed=True)
+  (/input-4): BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+  (/input-8): BoundConv(name=/input-8, inputs=[/input-4, /3, /4], perturbed=True)
+  (/input-12): BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+  (/input-16): BoundConv(name=/input-16, inputs=[/input-12, /5, /6], perturbed=True)
+  (/input-20): BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+  (/input-24): BoundConv(name=/input-24, inputs=[/input-20, /7, /8], perturbed=True)
+  (/input-28): BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+  (/input-32): BoundConv(name=/input-32, inputs=[/input-28, /9, /10], perturbed=True)
+  (/24): BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+  (/25): BoundFlatten(name=/25, inputs=[/24], perturbed=True)
+  (/input-36): BoundLinear(name=/input-36, inputs=[/25, /11, /12], perturbed=True)
+  (/27): BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+  (/28): BoundLinear(name=/28, inputs=[/27, /13, /14], perturbed=True)
+)
+Original output in the first batch: tensor([[ 9.71158028, -7.75421286, -3.64939928, -2.86368012, -0.37996158,
+         -1.10781395,  1.02765191, -3.47034645, -2.63331294,  1.97833443]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+   BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+   BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+   BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+   BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+   BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+build batch [1/1]
+layer /input-4 using sparse-features alpha with shape [231]; unstable size 231; total size 50176 ([1, 64, 28, 28])
+layer /input-4 start_node /input-8 using sparse-spec alpha [2, 127, 1, 231] with unstable size 126 total_size 50176 output_shape (64, 28, 28)
+layer /input-4 start_node /input-16 using sparse-spec alpha [2, 41, 1, 231] with unstable size 40 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-24 using sparse-spec alpha [2, 44, 1, 231] with unstable size 43 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-32 using sparse-spec alpha [2, 14, 1, 231] with unstable size 13 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /28 using full alpha [2, 9, 1, 231] with unstable size None total_size 9 output_shape 9
+layer /input-12 using sparse-features alpha with shape [126]; unstable size 126; total size 50176 ([1, 64, 28, 28])
+layer /input-12 start_node /input-16 using sparse-spec alpha [2, 41, 1, 126] with unstable size 40 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-24 using sparse-spec alpha [2, 44, 1, 126] with unstable size 43 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-32 using sparse-spec alpha [2, 14, 1, 126] with unstable size 13 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /28 using full alpha [2, 9, 1, 126] with unstable size None total_size 9 output_shape 9
+layer /input-20 using sparse-features alpha with shape [40]; unstable size 40; total size 25088 ([1, 128, 14, 14])
+layer /input-20 start_node /input-24 using sparse-spec alpha [2, 44, 1, 40] with unstable size 43 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /input-32 using sparse-spec alpha [2, 14, 1, 40] with unstable size 13 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /28 using full alpha [2, 9, 1, 40] with unstable size None total_size 9 output_shape 9
+layer /input-28 using sparse-features alpha with shape [43]; unstable size 43; total size 25088 ([1, 128, 14, 14])
+layer /input-28 start_node /input-32 using sparse-spec alpha [2, 14, 1, 43] with unstable size 13 total_size 25088 output_shape (128, 14, 14)
+layer /input-28 start_node /28 using full alpha [2, 9, 1, 43] with unstable size None total_size 9 output_shape 9
+layer /24 using sparse-features alpha with shape [13]; unstable size 13; total size 25088 ([1, 128, 14, 14])
+layer /24 start_node /28 using full alpha [2, 9, 1, 13] with unstable size None total_size 9 output_shape 9
+layer /27 using sparse-features alpha with shape [0]; unstable size 0; total size 512 ([1, 512])
+layer /27 start_node /28 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [16.742177963256836, 12.73599910736084, 11.996294021606445, 9.623201370239258, 10.317280769348145, 8.253218650817871, 12.644269943237305, 11.872968673706055, 7.3494873046875]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 12.5893 seconds
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 4, vnnlib ID: 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finished vnnlib processing in 0.000974 seconds
+Attack parameters: initialization=uniform, steps=100, restarts=10, alpha=0.0025000013411045074, GAMA=False
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[29.08938026, 27.48923874, 19.74037361, 30.66320229, 31.98119164,
+         25.19298553, 22.94639969, 24.98707199,  9.33401966]])
+Total number of violation:  0
+Processing batch 1/1...
+PGD attack margin (first 2 examples and 10 specs):
+ tensor([[28.99350357, 27.31887436, 19.66201210, 30.43474197, 31.80560684,
+         25.07140732, 22.71085739, 24.74134827,  9.23761177]])
+Total number of violation:  0
+Attack finished in 12.1926 seconds.
+PGD attack failed
+verified_status unknown
+verified_success False
+Model: BoundedModule(
+  (/input-1): BoundInput(name=/input-1, inputs=[], perturbed=True)
+  (/1): BoundParams(name=/1, inputs=[], perturbed=False)
+  (/2): BoundParams(name=/2, inputs=[], perturbed=False)
+  (/3): BoundParams(name=/3, inputs=[], perturbed=False)
+  (/4): BoundParams(name=/4, inputs=[], perturbed=False)
+  (/5): BoundParams(name=/5, inputs=[], perturbed=False)
+  (/6): BoundParams(name=/6, inputs=[], perturbed=False)
+  (/7): BoundParams(name=/7, inputs=[], perturbed=False)
+  (/8): BoundParams(name=/8, inputs=[], perturbed=False)
+  (/9): BoundParams(name=/9, inputs=[], perturbed=False)
+  (/10): BoundParams(name=/10, inputs=[], perturbed=False)
+  (/11): BoundParams(name=/11, inputs=[], perturbed=False)
+  (/12): BoundParams(name=/12, inputs=[], perturbed=False)
+  (/13): BoundParams(name=/13, inputs=[], perturbed=False)
+  (/14): BoundParams(name=/14, inputs=[], perturbed=False)
+  (/input): BoundConv(name=/input, inputs=[/input-1, /1, /2], perturbed=True)
+  (/input-4): BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+  (/input-8): BoundConv(name=/input-8, inputs=[/input-4, /3, /4], perturbed=True)
+  (/input-12): BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+  (/input-16): BoundConv(name=/input-16, inputs=[/input-12, /5, /6], perturbed=True)
+  (/input-20): BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+  (/input-24): BoundConv(name=/input-24, inputs=[/input-20, /7, /8], perturbed=True)
+  (/input-28): BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+  (/input-32): BoundConv(name=/input-32, inputs=[/input-28, /9, /10], perturbed=True)
+  (/24): BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+  (/25): BoundFlatten(name=/25, inputs=[/24], perturbed=True)
+  (/input-36): BoundLinear(name=/input-36, inputs=[/25, /11, /12], perturbed=True)
+  (/27): BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+  (/28): BoundLinear(name=/28, inputs=[/27, /13, /14], perturbed=True)
+)
+Original output in the first batch: tensor([[-11.48522854,  -9.86551666,  -2.01411939, -13.08382797,  18.14905548,
+         -14.41369915,  -7.54073143,  -5.22966957,  -7.32067490,   8.64657784]])
+Split layers:
+Nonlinear functions:
+   BoundRelu(name=/input-4, inputs=[/input], perturbed=True)
+   BoundRelu(name=/input-12, inputs=[/input-8], perturbed=True)
+   BoundRelu(name=/input-20, inputs=[/input-16], perturbed=True)
+   BoundRelu(name=/input-28, inputs=[/input-24], perturbed=True)
+   BoundRelu(name=/24, inputs=[/input-32], perturbed=True)
+   BoundRelu(name=/27, inputs=[/input-36], perturbed=True)
+build batch [1/1]
+layer /input-4 using sparse-features alpha with shape [219]; unstable size 219; total size 50176 ([1, 64, 28, 28])
+layer /input-4 start_node /input-8 using sparse-spec alpha [2, 107, 1, 219] with unstable size 106 total_size 50176 output_shape (64, 28, 28)
+layer /input-4 start_node /input-16 using sparse-spec alpha [2, 120, 1, 219] with unstable size 119 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-24 using sparse-spec alpha [2, 69, 1, 219] with unstable size 68 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /input-32 using sparse-spec alpha [2, 32, 1, 219] with unstable size 31 total_size 25088 output_shape (128, 14, 14)
+layer /input-4 start_node /28 using full alpha [2, 9, 1, 219] with unstable size None total_size 9 output_shape 9
+layer /input-12 using sparse-features alpha with shape [106]; unstable size 106; total size 50176 ([1, 64, 28, 28])
+layer /input-12 start_node /input-16 using sparse-spec alpha [2, 120, 1, 106] with unstable size 119 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-24 using sparse-spec alpha [2, 69, 1, 106] with unstable size 68 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /input-32 using sparse-spec alpha [2, 32, 1, 106] with unstable size 31 total_size 25088 output_shape (128, 14, 14)
+layer /input-12 start_node /28 using full alpha [2, 9, 1, 106] with unstable size None total_size 9 output_shape 9
+layer /input-20 using sparse-features alpha with shape [119]; unstable size 119; total size 25088 ([1, 128, 14, 14])
+layer /input-20 start_node /input-24 using sparse-spec alpha [2, 69, 1, 119] with unstable size 68 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /input-32 using sparse-spec alpha [2, 32, 1, 119] with unstable size 31 total_size 25088 output_shape (128, 14, 14)
+layer /input-20 start_node /28 using full alpha [2, 9, 1, 119] with unstable size None total_size 9 output_shape 9
+layer /input-28 using sparse-features alpha with shape [68]; unstable size 68; total size 25088 ([1, 128, 14, 14])
+layer /input-28 start_node /input-32 using sparse-spec alpha [2, 32, 1, 68] with unstable size 31 total_size 25088 output_shape (128, 14, 14)
+layer /input-28 start_node /28 using full alpha [2, 9, 1, 68] with unstable size None total_size 9 output_shape 9
+layer /24 using sparse-features alpha with shape [31]; unstable size 31; total size 25088 ([1, 128, 14, 14])
+layer /24 start_node /28 using full alpha [2, 9, 1, 31] with unstable size None total_size 9 output_shape 9
+layer /27 using sparse-features alpha with shape [0]; unstable size 0; total size 512 ([1, 512])
+layer /27 start_node /28 using full alpha [2, 9, 1, 0] with unstable size None total_size 9 output_shape 9
+Optimizable variables initialized.
+initial CROWN bounds (first 10 items): [28.98438262939453, 27.312477111816406, 19.650650024414062, 30.425857543945312, 31.788808822631836, 25.066049575805664, 22.704538345336914, 24.73172378540039, 9.231589317321777]
+Verified with initial CROWN!
+verified with init bound!
+Result: safe-incomplete in 12.4051 seconds
+############# Summary #############
+Final verified acc: 100.0% (total 5 examples)
+Problem instances count: 5 , total verified (safe/unsat): 5 , total falsified (unsafe/sat): 0 , timeout: 0
+mean time for ALL instances (total 5):11.66967752162213, max time: 12.589312553405762
+mean time for verified SAFE instances(total 5): 11.669700860977173, max time: 12.589312553405762
+safe-incomplete (total 5), index: [0, 1, 2, 3, 4]
+
+STDERR:
+D:\ABCROWN\alpha-beta-CROWN\complete_verifier\specifications.py:342: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\utils\tensor_new.cpp:256.)
+  x_range_list = torch.Tensor(x_range_list).to(dtype=dtype, device=device).view(input_shape + [2])
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+  1%|          | 1/100 [00:00<00:12,  7.91it/s]
+  2%|▏         | 2/100 [00:00<00:11,  8.51it/s]
+  3%|▎         | 3/100 [00:00<00:11,  8.67it/s]
+  4%|▍         | 4/100 [00:00<00:10,  9.15it/s]
+  5%|▌         | 5/100 [00:00<00:10,  9.17it/s]
+  6%|▌         | 6/100 [00:00<00:10,  8.90it/s]
+  7%|▋         | 7/100 [00:00<00:10,  8.98it/s]
+  8%|▊         | 8/100 [00:00<00:10,  9.11it/s]
+  9%|▉         | 9/100 [00:01<00:10,  9.06it/s]
+ 10%|█         | 10/100 [00:01<00:09,  9.15it/s]
+ 12%|█▏        | 12/100 [00:01<00:09,  9.50it/s]
+ 13%|█▎        | 13/100 [00:01<00:09,  9.42it/s]
+ 14%|█▍        | 14/100 [00:01<00:09,  9.35it/s]
+ 15%|█▌        | 15/100 [00:01<00:09,  9.27it/s]
+ 16%|█▌        | 16/100 [00:01<00:09,  9.06it/s]
+ 18%|█▊        | 18/100 [00:01<00:08,  9.31it/s]
+ 19%|█▉        | 19/100 [00:02<00:08,  9.17it/s]
+ 20%|██        | 20/100 [00:02<00:08,  9.06it/s]
+ 21%|██        | 21/100 [00:02<00:08,  9.08it/s]
+ 22%|██▏       | 22/100 [00:02<00:08,  8.97it/s]
+ 23%|██▎       | 23/100 [00:02<00:08,  8.80it/s]
+ 24%|██▍       | 24/100 [00:02<00:08,  8.91it/s]
+ 26%|██▌       | 26/100 [00:02<00:08,  9.24it/s]
+ 27%|██▋       | 27/100 [00:02<00:08,  9.06it/s]
+ 28%|██▊       | 28/100 [00:03<00:07,  9.06it/s]
+ 29%|██▉       | 29/100 [00:03<00:07,  9.12it/s]
+ 30%|███       | 30/100 [00:03<00:07,  9.03it/s]
+ 31%|███       | 31/100 [00:03<00:07,  9.07it/s]
+ 32%|███▏      | 32/100 [00:03<00:07,  8.92it/s]
+ 34%|███▍      | 34/100 [00:03<00:07,  9.25it/s]
+ 35%|███▌      | 35/100 [00:03<00:07,  9.13it/s]
+ 36%|███▌      | 36/100 [00:03<00:06,  9.23it/s]
+ 37%|███▋      | 37/100 [00:04<00:06,  9.26it/s]
+ 38%|███▊      | 38/100 [00:04<00:06,  9.09it/s]
+ 40%|████      | 40/100 [00:04<00:06,  9.40it/s]
+ 41%|████      | 41/100 [00:04<00:06,  9.51it/s]
+ 42%|████▏     | 42/100 [00:04<00:06,  9.59it/s]
+ 43%|████▎     | 43/100 [00:04<00:05,  9.57it/s]
+ 44%|████▍     | 44/100 [00:04<00:05,  9.51it/s]
+ 45%|████▌     | 45/100 [00:04<00:06,  9.16it/s]
+ 46%|████▌     | 46/100 [00:05<00:05,  9.21it/s]
+ 47%|████▋     | 47/100 [00:05<00:05,  8.95it/s]
+ 48%|████▊     | 48/100 [00:05<00:05,  8.95it/s]
+ 49%|████▉     | 49/100 [00:05<00:05,  9.13it/s]
+ 50%|█████     | 50/100 [00:05<00:05,  9.27it/s]
+ 51%|█████     | 51/100 [00:05<00:05,  8.98it/s]
+ 52%|█████▏    | 52/100 [00:05<00:05,  9.14it/s]
+ 54%|█████▍    | 54/100 [00:05<00:04,  9.42it/s]
+ 55%|█████▌    | 55/100 [00:05<00:04,  9.46it/s]
+ 56%|█████▌    | 56/100 [00:06<00:04,  9.32it/s]
+ 57%|█████▋    | 57/100 [00:06<00:04,  9.45it/s]
+ 58%|█████▊    | 58/100 [00:06<00:04,  9.32it/s]
+ 59%|█████▉    | 59/100 [00:06<00:04,  9.28it/s]
+ 60%|██████    | 60/100 [00:06<00:04,  9.13it/s]
+ 62%|██████▏   | 62/100 [00:06<00:04,  9.44it/s]
+ 63%|██████▎   | 63/100 [00:06<00:03,  9.50it/s]
+ 65%|██████▌   | 65/100 [00:07<00:03,  9.50it/s]
+ 66%|██████▌   | 66/100 [00:07<00:03,  9.57it/s]
+ 68%|██████▊   | 68/100 [00:07<00:03,  9.71it/s]
+ 69%|██████▉   | 69/100 [00:07<00:03,  9.59it/s]
+ 70%|███████   | 70/100 [00:07<00:03,  9.66it/s]
+ 71%|███████   | 71/100 [00:07<00:03,  9.40it/s]
+ 72%|███████▏  | 72/100 [00:07<00:02,  9.35it/s]
+ 73%|███████▎  | 73/100 [00:07<00:02,  9.22it/s]
+ 74%|███████▍  | 74/100 [00:08<00:02,  9.21it/s]
+ 75%|███████▌  | 75/100 [00:08<00:02,  9.36it/s]
+ 76%|███████▌  | 76/100 [00:08<00:02,  9.46it/s]
+ 77%|███████▋  | 77/100 [00:08<00:02,  9.36it/s]
+ 78%|███████▊  | 78/100 [00:08<00:02,  9.15it/s]
+ 79%|███████▉  | 79/100 [00:08<00:02,  9.20it/s]
+ 80%|████████  | 80/100 [00:08<00:02,  9.36it/s]
+ 81%|████████  | 81/100 [00:08<00:02,  9.08it/s]
+ 82%|████████▏ | 82/100 [00:08<00:02,  8.76it/s]
+ 83%|████████▎ | 83/100 [00:09<00:01,  8.75it/s]
+ 84%|████████▍ | 84/100 [00:09<00:01,  8.81it/s]
+ 86%|████████▌ | 86/100 [00:09<00:01,  9.32it/s]
+ 88%|████████▊ | 88/100 [00:09<00:01,  9.56it/s]
+ 89%|████████▉ | 89/100 [00:09<00:01,  9.49it/s]
+ 90%|█████████ | 90/100 [00:09<00:01,  9.32it/s]
+ 92%|█████████▏| 92/100 [00:09<00:00,  9.52it/s]
+ 93%|█████████▎| 93/100 [00:10<00:00,  9.40it/s]
+ 94%|█████████▍| 94/100 [00:10<00:00,  9.38it/s]
+ 95%|█████████▌| 95/100 [00:10<00:00,  9.31it/s]
+ 96%|█████████▌| 96/100 [00:10<00:00,  8.97it/s]
+ 97%|█████████▋| 97/100 [00:10<00:00,  8.91it/s]
+ 98%|█████████▊| 98/100 [00:10<00:00,  8.93it/s]
+ 99%|█████████▉| 99/100 [00:10<00:00,  9.09it/s]
+100%|██████████| 100/100 [00:10<00:00,  9.10it/s]
+100%|██████████| 100/100 [00:10<00:00,  9.22it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+  1%|          | 1/100 [00:00<00:11,  8.61it/s]
+  2%|▏         | 2/100 [00:00<00:11,  8.76it/s]
+  3%|▎         | 3/100 [00:00<00:11,  8.72it/s]
+  4%|▍         | 4/100 [00:00<00:10,  8.86it/s]
+  5%|▌         | 5/100 [00:00<00:10,  8.85it/s]
+  6%|▌         | 6/100 [00:00<00:10,  9.00it/s]
+  7%|▋         | 7/100 [00:00<00:10,  9.12it/s]
+  8%|▊         | 8/100 [00:00<00:09,  9.37it/s]
+  9%|▉         | 9/100 [00:00<00:09,  9.27it/s]
+ 10%|█         | 10/100 [00:01<00:09,  9.22it/s]
+ 11%|█         | 11/100 [00:01<00:09,  8.94it/s]
+ 12%|█▏        | 12/100 [00:01<00:09,  9.22it/s]
+ 13%|█▎        | 13/100 [00:01<00:09,  9.08it/s]
+ 14%|█▍        | 14/100 [00:01<00:09,  9.10it/s]
+ 15%|█▌        | 15/100 [00:01<00:09,  8.88it/s]
+ 16%|█▌        | 16/100 [00:01<00:09,  8.78it/s]
+ 17%|█▋        | 17/100 [00:01<00:09,  8.89it/s]
+ 18%|█▊        | 18/100 [00:02<00:09,  8.71it/s]
+ 19%|█▉        | 19/100 [00:02<00:09,  8.83it/s]
+ 20%|██        | 20/100 [00:02<00:08,  8.90it/s]
+ 21%|██        | 21/100 [00:02<00:08,  8.95it/s]
+ 22%|██▏       | 22/100 [00:02<00:08,  8.84it/s]
+ 23%|██▎       | 23/100 [00:02<00:08,  8.91it/s]
+ 24%|██▍       | 24/100 [00:02<00:08,  9.03it/s]
+ 25%|██▌       | 25/100 [00:02<00:08,  8.95it/s]
+ 26%|██▌       | 26/100 [00:02<00:08,  9.15it/s]
+ 27%|██▋       | 27/100 [00:03<00:08,  8.98it/s]
+ 28%|██▊       | 28/100 [00:03<00:08,  8.87it/s]
+ 29%|██▉       | 29/100 [00:03<00:08,  8.84it/s]
+ 30%|███       | 30/100 [00:03<00:07,  8.81it/s]
+ 31%|███       | 31/100 [00:03<00:07,  8.94it/s]
+ 32%|███▏      | 32/100 [00:03<00:07,  8.86it/s]
+ 33%|███▎      | 33/100 [00:03<00:07,  9.13it/s]
+ 34%|███▍      | 34/100 [00:03<00:07,  9.25it/s]
+ 35%|███▌      | 35/100 [00:03<00:07,  9.28it/s]
+ 36%|███▌      | 36/100 [00:03<00:06,  9.27it/s]
+ 37%|███▋      | 37/100 [00:04<00:06,  9.11it/s]
+ 38%|███▊      | 38/100 [00:04<00:06,  9.12it/s]
+ 39%|███▉      | 39/100 [00:04<00:06,  9.06it/s]
+ 40%|████      | 40/100 [00:04<00:06,  9.09it/s]
+ 41%|████      | 41/100 [00:04<00:06,  8.90it/s]
+ 42%|████▏     | 42/100 [00:04<00:06,  9.02it/s]
+ 43%|████▎     | 43/100 [00:04<00:06,  8.93it/s]
+ 44%|████▍     | 44/100 [00:04<00:06,  8.84it/s]
+ 45%|████▌     | 45/100 [00:05<00:06,  8.72it/s]
+ 46%|████▌     | 46/100 [00:05<00:06,  8.80it/s]
+ 47%|████▋     | 47/100 [00:05<00:05,  8.90it/s]
+ 48%|████▊     | 48/100 [00:05<00:06,  8.58it/s]
+ 49%|████▉     | 49/100 [00:05<00:05,  8.72it/s]
+ 50%|█████     | 50/100 [00:05<00:05,  8.60it/s]
+ 51%|█████     | 51/100 [00:05<00:05,  8.85it/s]
+ 52%|█████▏    | 52/100 [00:05<00:05,  9.01it/s]
+ 53%|█████▎    | 53/100 [00:05<00:05,  9.25it/s]
+ 54%|█████▍    | 54/100 [00:06<00:04,  9.27it/s]
+ 55%|█████▌    | 55/100 [00:06<00:04,  9.02it/s]
+ 56%|█████▌    | 56/100 [00:06<00:04,  8.97it/s]
+ 57%|█████▋    | 57/100 [00:06<00:04,  9.04it/s]
+ 58%|█████▊    | 58/100 [00:06<00:04,  8.85it/s]
+ 60%|██████    | 60/100 [00:06<00:04,  9.21it/s]
+ 61%|██████    | 61/100 [00:06<00:04,  9.12it/s]
+ 62%|██████▏   | 62/100 [00:06<00:04,  9.27it/s]
+ 63%|██████▎   | 63/100 [00:07<00:03,  9.29it/s]
+ 64%|██████▍   | 64/100 [00:07<00:03,  9.42it/s]
+ 66%|██████▌   | 66/100 [00:07<00:03,  9.48it/s]
+ 67%|██████▋   | 67/100 [00:07<00:03,  9.35it/s]
+ 68%|██████▊   | 68/100 [00:07<00:03,  9.11it/s]
+ 69%|██████▉   | 69/100 [00:07<00:03,  9.22it/s]
+ 70%|███████   | 70/100 [00:07<00:03,  9.37it/s]
+ 71%|███████   | 71/100 [00:07<00:03,  9.26it/s]
+ 72%|███████▏  | 72/100 [00:07<00:03,  8.99it/s]
+ 73%|███████▎  | 73/100 [00:08<00:02,  9.17it/s]
+ 74%|███████▍  | 74/100 [00:08<00:02,  9.00it/s]
+ 75%|███████▌  | 75/100 [00:08<00:02,  8.91it/s]
+ 76%|███████▌  | 76/100 [00:08<00:02,  8.88it/s]
+ 77%|███████▋  | 77/100 [00:08<00:02,  8.87it/s]
+ 78%|███████▊  | 78/100 [00:08<00:02,  8.96it/s]
+ 79%|███████▉  | 79/100 [00:08<00:02,  9.03it/s]
+ 80%|████████  | 80/100 [00:08<00:02,  9.09it/s]
+ 81%|████████  | 81/100 [00:08<00:02,  9.12it/s]
+ 82%|████████▏ | 82/100 [00:09<00:01,  9.19it/s]
+ 83%|████████▎ | 83/100 [00:09<00:01,  9.00it/s]
+ 84%|████████▍ | 84/100 [00:09<00:01,  9.15it/s]
+ 85%|████████▌ | 85/100 [00:09<00:01,  9.22it/s]
+ 86%|████████▌ | 86/100 [00:09<00:01,  9.00it/s]
+ 87%|████████▋ | 87/100 [00:09<00:01,  9.11it/s]
+ 88%|████████▊ | 88/100 [00:09<00:01,  9.22it/s]
+ 89%|████████▉ | 89/100 [00:09<00:01,  9.20it/s]
+ 90%|█████████ | 90/100 [00:09<00:01,  8.94it/s]
+ 91%|█████████ | 91/100 [00:10<00:01,  8.92it/s]
+ 92%|█████████▏| 92/100 [00:10<00:00,  9.06it/s]
+ 93%|█████████▎| 93/100 [00:10<00:00,  9.10it/s]
+ 94%|█████████▍| 94/100 [00:10<00:00,  8.78it/s]
+ 95%|█████████▌| 95/100 [00:10<00:00,  8.88it/s]
+ 96%|█████████▌| 96/100 [00:10<00:00,  8.96it/s]
+ 97%|█████████▋| 97/100 [00:10<00:00,  9.10it/s]
+ 98%|█████████▊| 98/100 [00:10<00:00,  9.08it/s]
+ 99%|█████████▉| 99/100 [00:10<00:00,  9.24it/s]
+100%|██████████| 100/100 [00:11<00:00,  9.10it/s]
+100%|██████████| 100/100 [00:11<00:00,  9.03it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+  1%|          | 1/100 [00:00<00:11,  8.91it/s]
+  2%|▏         | 2/100 [00:00<00:10,  9.16it/s]
+  3%|▎         | 3/100 [00:00<00:10,  9.19it/s]
+  4%|▍         | 4/100 [00:00<00:10,  9.20it/s]
+  5%|▌         | 5/100 [00:00<00:10,  9.23it/s]
+  6%|▌         | 6/100 [00:00<00:10,  9.21it/s]
+  7%|▋         | 7/100 [00:00<00:09,  9.33it/s]
+  8%|▊         | 8/100 [00:00<00:09,  9.41it/s]
+  9%|▉         | 9/100 [00:00<00:09,  9.18it/s]
+ 10%|█         | 10/100 [00:01<00:10,  8.36it/s]
+ 11%|█         | 11/100 [00:01<00:10,  8.74it/s]
+ 12%|█▏        | 12/100 [00:01<00:09,  8.88it/s]
+ 13%|█▎        | 13/100 [00:01<00:09,  9.06it/s]
+ 14%|█▍        | 14/100 [00:01<00:09,  8.89it/s]
+ 15%|█▌        | 15/100 [00:01<00:09,  9.16it/s]
+ 16%|█▌        | 16/100 [00:01<00:09,  9.12it/s]
+ 17%|█▋        | 17/100 [00:01<00:08,  9.26it/s]
+ 18%|█▊        | 18/100 [00:01<00:08,  9.46it/s]
+ 20%|██        | 20/100 [00:02<00:08,  9.65it/s]
+ 21%|██        | 21/100 [00:02<00:08,  9.47it/s]
+ 22%|██▏       | 22/100 [00:02<00:08,  9.51it/s]
+ 23%|██▎       | 23/100 [00:02<00:08,  9.23it/s]
+ 24%|██▍       | 24/100 [00:02<00:08,  9.36it/s]
+ 25%|██▌       | 25/100 [00:02<00:07,  9.46it/s]
+ 26%|██▌       | 26/100 [00:02<00:07,  9.60it/s]
+ 27%|██▋       | 27/100 [00:02<00:07,  9.65it/s]
+ 28%|██▊       | 28/100 [00:03<00:07,  9.39it/s]
+ 29%|██▉       | 29/100 [00:03<00:07,  9.52it/s]
+ 30%|███       | 30/100 [00:03<00:07,  9.57it/s]
+ 31%|███       | 31/100 [00:03<00:07,  9.34it/s]
+ 32%|███▏      | 32/100 [00:03<00:07,  9.35it/s]
+ 33%|███▎      | 33/100 [00:03<00:07,  9.39it/s]
+ 35%|███▌      | 35/100 [00:03<00:06,  9.53it/s]
+ 36%|███▌      | 36/100 [00:03<00:06,  9.59it/s]
+ 37%|███▋      | 37/100 [00:03<00:06,  9.55it/s]
+ 38%|███▊      | 38/100 [00:04<00:06,  9.59it/s]
+ 39%|███▉      | 39/100 [00:04<00:06,  9.55it/s]
+ 40%|████      | 40/100 [00:04<00:06,  9.40it/s]
+ 41%|████      | 41/100 [00:04<00:06,  9.23it/s]
+ 42%|████▏     | 42/100 [00:04<00:06,  9.35it/s]
+ 43%|████▎     | 43/100 [00:04<00:06,  9.29it/s]
+ 44%|████▍     | 44/100 [00:04<00:06,  9.07it/s]
+ 46%|████▌     | 46/100 [00:04<00:05,  9.56it/s]
+ 47%|████▋     | 47/100 [00:05<00:05,  9.61it/s]
+ 49%|████▉     | 49/100 [00:05<00:05,  9.97it/s]
+ 50%|█████     | 50/100 [00:05<00:05,  9.70it/s]
+ 51%|█████     | 51/100 [00:05<00:05,  9.57it/s]
+ 52%|█████▏    | 52/100 [00:05<00:05,  9.33it/s]
+ 53%|█████▎    | 53/100 [00:05<00:05,  9.23it/s]
+ 54%|█████▍    | 54/100 [00:05<00:05,  9.10it/s]
+ 55%|█████▌    | 55/100 [00:05<00:04,  9.16it/s]
+ 56%|█████▌    | 56/100 [00:05<00:04,  9.32it/s]
+ 57%|█████▋    | 57/100 [00:06<00:04,  9.39it/s]
+ 58%|█████▊    | 58/100 [00:06<00:04,  9.39it/s]
+ 60%|██████    | 60/100 [00:06<00:04,  9.64it/s]
+ 61%|██████    | 61/100 [00:06<00:04,  9.57it/s]
+ 62%|██████▏   | 62/100 [00:06<00:04,  9.44it/s]
+ 63%|██████▎   | 63/100 [00:06<00:04,  9.08it/s]
+ 64%|██████▍   | 64/100 [00:06<00:03,  9.19it/s]
+ 65%|██████▌   | 65/100 [00:06<00:03,  9.18it/s]
+ 66%|██████▌   | 66/100 [00:07<00:03,  9.01it/s]
+ 68%|██████▊   | 68/100 [00:07<00:03,  9.20it/s]
+ 69%|██████▉   | 69/100 [00:07<00:03,  9.10it/s]
+ 70%|███████   | 70/100 [00:07<00:03,  9.07it/s]
+ 71%|███████   | 71/100 [00:07<00:03,  9.13it/s]
+ 72%|███████▏  | 72/100 [00:07<00:03,  9.14it/s]
+ 73%|███████▎  | 73/100 [00:07<00:02,  9.35it/s]
+ 74%|███████▍  | 74/100 [00:07<00:02,  9.06it/s]
+ 75%|███████▌  | 75/100 [00:08<00:02,  8.99it/s]
+ 76%|███████▌  | 76/100 [00:08<00:02,  9.22it/s]
+ 77%|███████▋  | 77/100 [00:08<00:02,  9.25it/s]
+ 78%|███████▊  | 78/100 [00:08<00:02,  9.26it/s]
+ 79%|███████▉  | 79/100 [00:08<00:02,  9.38it/s]
+ 80%|████████  | 80/100 [00:08<00:02,  9.32it/s]
+ 81%|████████  | 81/100 [00:08<00:02,  9.35it/s]
+ 82%|████████▏ | 82/100 [00:08<00:01,  9.22it/s]
+ 83%|████████▎ | 83/100 [00:08<00:01,  9.29it/s]
+ 85%|████████▌ | 85/100 [00:09<00:01,  9.65it/s]
+ 86%|████████▌ | 86/100 [00:09<00:01,  9.35it/s]
+ 87%|████████▋ | 87/100 [00:09<00:01,  9.21it/s]
+ 88%|████████▊ | 88/100 [00:09<00:01,  9.16it/s]
+ 89%|████████▉ | 89/100 [00:09<00:01,  9.00it/s]
+ 90%|█████████ | 90/100 [00:09<00:01,  9.07it/s]
+ 91%|█████████ | 91/100 [00:09<00:01,  8.75it/s]
+ 92%|█████████▏| 92/100 [00:09<00:00,  8.99it/s]
+ 93%|█████████▎| 93/100 [00:10<00:00,  8.73it/s]
+ 94%|█████████▍| 94/100 [00:10<00:00,  8.59it/s]
+ 95%|█████████▌| 95/100 [00:10<00:00,  8.35it/s]
+ 96%|█████████▌| 96/100 [00:10<00:00,  8.46it/s]
+ 97%|█████████▋| 97/100 [00:10<00:00,  8.56it/s]
+ 98%|█████████▊| 98/100 [00:10<00:00,  8.27it/s]
+ 99%|█████████▉| 99/100 [00:10<00:00,  8.43it/s]
+100%|██████████| 100/100 [00:10<00:00,  8.13it/s]
+100%|██████████| 100/100 [00:10<00:00,  9.19it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+  1%|          | 1/100 [00:00<00:11,  8.66it/s]
+  2%|▏         | 2/100 [00:00<00:11,  8.76it/s]
+  3%|▎         | 3/100 [00:00<00:11,  8.18it/s]
+  4%|▍         | 4/100 [00:00<00:12,  7.83it/s]
+  5%|▌         | 5/100 [00:00<00:12,  7.84it/s]
+  6%|▌         | 6/100 [00:00<00:11,  7.96it/s]
+  7%|▋         | 7/100 [00:00<00:11,  8.03it/s]
+  8%|▊         | 8/100 [00:00<00:11,  8.03it/s]
+  9%|▉         | 9/100 [00:01<00:12,  7.37it/s]
+ 10%|█         | 10/100 [00:01<00:12,  7.21it/s]
+ 11%|█         | 11/100 [00:01<00:11,  7.43it/s]
+ 12%|█▏        | 12/100 [00:01<00:11,  7.62it/s]
+ 13%|█▎        | 13/100 [00:01<00:11,  7.76it/s]
+ 14%|█▍        | 14/100 [00:01<00:11,  7.81it/s]
+ 15%|█▌        | 15/100 [00:01<00:10,  7.84it/s]
+ 16%|█▌        | 16/100 [00:02<00:10,  8.03it/s]
+ 17%|█▋        | 17/100 [00:02<00:10,  7.76it/s]
+ 18%|█▊        | 18/100 [00:02<00:10,  7.68it/s]
+ 19%|█▉        | 19/100 [00:02<00:10,  7.68it/s]
+ 20%|██        | 20/100 [00:02<00:10,  7.69it/s]
+ 21%|██        | 21/100 [00:02<00:10,  7.88it/s]
+ 22%|██▏       | 22/100 [00:02<00:09,  8.15it/s]
+ 23%|██▎       | 23/100 [00:02<00:09,  8.30it/s]
+ 24%|██▍       | 24/100 [00:03<00:09,  8.42it/s]
+ 25%|██▌       | 25/100 [00:03<00:09,  8.29it/s]
+ 26%|██▌       | 26/100 [00:03<00:08,  8.37it/s]
+ 27%|██▋       | 27/100 [00:03<00:08,  8.52it/s]
+ 28%|██▊       | 28/100 [00:03<00:08,  8.29it/s]
+ 29%|██▉       | 29/100 [00:03<00:08,  8.07it/s]
+ 30%|███       | 30/100 [00:03<00:08,  8.31it/s]
+ 31%|███       | 31/100 [00:03<00:08,  8.50it/s]
+ 32%|███▏      | 32/100 [00:03<00:08,  8.34it/s]
+ 33%|███▎      | 33/100 [00:04<00:08,  8.37it/s]
+ 34%|███▍      | 34/100 [00:04<00:07,  8.30it/s]
+ 35%|███▌      | 35/100 [00:04<00:08,  8.10it/s]
+ 36%|███▌      | 36/100 [00:04<00:08,  7.98it/s]
+ 37%|███▋      | 37/100 [00:04<00:07,  7.92it/s]
+ 38%|███▊      | 38/100 [00:04<00:07,  7.96it/s]
+ 39%|███▉      | 39/100 [00:04<00:07,  7.94it/s]
+ 40%|████      | 40/100 [00:05<00:07,  7.88it/s]
+ 41%|████      | 41/100 [00:05<00:07,  7.88it/s]
+ 42%|████▏     | 42/100 [00:05<00:07,  7.96it/s]
+ 43%|████▎     | 43/100 [00:05<00:06,  8.19it/s]
+ 44%|████▍     | 44/100 [00:05<00:06,  8.05it/s]
+ 45%|████▌     | 45/100 [00:05<00:06,  7.91it/s]
+ 46%|████▌     | 46/100 [00:05<00:06,  8.01it/s]
+ 47%|████▋     | 47/100 [00:05<00:06,  8.03it/s]
+ 48%|████▊     | 48/100 [00:05<00:06,  8.20it/s]
+ 49%|████▉     | 49/100 [00:06<00:06,  8.34it/s]
+ 50%|█████     | 50/100 [00:06<00:06,  8.26it/s]
+ 51%|█████     | 51/100 [00:06<00:06,  8.12it/s]
+ 52%|█████▏    | 52/100 [00:06<00:05,  8.14it/s]
+ 53%|█████▎    | 53/100 [00:06<00:05,  8.11it/s]
+ 54%|█████▍    | 54/100 [00:06<00:05,  8.13it/s]
+ 55%|█████▌    | 55/100 [00:06<00:05,  8.16it/s]
+ 56%|█████▌    | 56/100 [00:06<00:05,  8.06it/s]
+ 57%|█████▋    | 57/100 [00:07<00:05,  8.00it/s]
+ 58%|█████▊    | 58/100 [00:07<00:05,  7.88it/s]
+ 59%|█████▉    | 59/100 [00:07<00:05,  7.88it/s]
+ 60%|██████    | 60/100 [00:07<00:05,  7.81it/s]
+ 61%|██████    | 61/100 [00:07<00:04,  7.90it/s]
+ 62%|██████▏   | 62/100 [00:07<00:04,  7.97it/s]
+ 63%|██████▎   | 63/100 [00:07<00:04,  7.97it/s]
+ 64%|██████▍   | 64/100 [00:07<00:04,  8.02it/s]
+ 65%|██████▌   | 65/100 [00:08<00:04,  8.15it/s]
+ 66%|██████▌   | 66/100 [00:08<00:04,  8.30it/s]
+ 67%|██████▋   | 67/100 [00:08<00:03,  8.56it/s]
+ 68%|██████▊   | 68/100 [00:08<00:03,  8.64it/s]
+ 69%|██████▉   | 69/100 [00:08<00:03,  8.62it/s]
+ 70%|███████   | 70/100 [00:08<00:03,  8.67it/s]
+ 71%|███████   | 71/100 [00:08<00:03,  8.61it/s]
+ 72%|███████▏  | 72/100 [00:08<00:03,  8.45it/s]
+ 73%|███████▎  | 73/100 [00:09<00:03,  8.38it/s]
+ 74%|███████▍  | 74/100 [00:09<00:03,  8.09it/s]
+ 75%|███████▌  | 75/100 [00:09<00:03,  8.19it/s]
+ 76%|███████▌  | 76/100 [00:09<00:03,  7.98it/s]
+ 77%|███████▋  | 77/100 [00:09<00:02,  7.92it/s]
+ 78%|███████▊  | 78/100 [00:09<00:02,  7.76it/s]
+ 79%|███████▉  | 79/100 [00:09<00:02,  8.03it/s]
+ 80%|████████  | 80/100 [00:09<00:02,  8.04it/s]
+ 81%|████████  | 81/100 [00:10<00:02,  8.30it/s]
+ 82%|████████▏ | 82/100 [00:10<00:02,  8.40it/s]
+ 83%|████████▎ | 83/100 [00:10<00:02,  8.35it/s]
+ 84%|████████▍ | 84/100 [00:10<00:01,  8.10it/s]
+ 85%|████████▌ | 85/100 [00:10<00:01,  8.12it/s]
+ 86%|████████▌ | 86/100 [00:10<00:01,  8.13it/s]
+ 87%|████████▋ | 87/100 [00:10<00:01,  8.12it/s]
+ 88%|████████▊ | 88/100 [00:10<00:01,  7.97it/s]
+ 89%|████████▉ | 89/100 [00:11<00:01,  8.09it/s]
+ 90%|█████████ | 90/100 [00:11<00:01,  8.35it/s]
+ 91%|█████████ | 91/100 [00:11<00:01,  7.97it/s]
+ 92%|█████████▏| 92/100 [00:11<00:01,  7.94it/s]
+ 93%|█████████▎| 93/100 [00:11<00:00,  7.93it/s]
+ 94%|█████████▍| 94/100 [00:11<00:00,  7.92it/s]
+ 95%|█████████▌| 95/100 [00:11<00:00,  8.01it/s]
+ 96%|█████████▌| 96/100 [00:11<00:00,  7.78it/s]
+ 97%|█████████▋| 97/100 [00:12<00:00,  7.79it/s]
+ 98%|█████████▊| 98/100 [00:12<00:00,  7.70it/s]
+ 99%|█████████▉| 99/100 [00:12<00:00,  7.86it/s]
+100%|██████████| 100/100 [00:12<00:00,  8.02it/s]
+100%|██████████| 100/100 [00:12<00:00,  8.06it/s]
+
+  0%|          | 0/100 [00:00<?, ?it/s]
+  1%|          | 1/100 [00:00<00:12,  7.82it/s]
+  2%|▏         | 2/100 [00:00<00:11,  8.18it/s]
+  3%|▎         | 3/100 [00:00<00:11,  8.16it/s]
+  4%|▍         | 4/100 [00:00<00:11,  8.31it/s]
+  5%|▌         | 5/100 [00:00<00:12,  7.54it/s]
+  6%|▌         | 6/100 [00:00<00:12,  7.70it/s]
+  7%|▋         | 7/100 [00:00<00:11,  7.97it/s]
+  8%|▊         | 8/100 [00:01<00:11,  8.06it/s]
+  9%|▉         | 9/100 [00:01<00:11,  8.17it/s]
+ 10%|█         | 10/100 [00:01<00:10,  8.40it/s]
+ 11%|█         | 11/100 [00:01<00:10,  8.14it/s]
+ 12%|█▏        | 12/100 [00:01<00:10,  8.16it/s]
+ 13%|█▎        | 13/100 [00:01<00:10,  8.08it/s]
+ 14%|█▍        | 14/100 [00:01<00:10,  7.96it/s]
+ 15%|█▌        | 15/100 [00:01<00:10,  7.97it/s]
+ 16%|█▌        | 16/100 [00:02<00:10,  7.78it/s]
+ 17%|█▋        | 17/100 [00:02<00:10,  7.79it/s]
+ 18%|█▊        | 18/100 [00:02<00:10,  8.01it/s]
+ 19%|█▉        | 19/100 [00:02<00:09,  8.15it/s]
+ 20%|██        | 20/100 [00:02<00:09,  8.07it/s]
+ 21%|██        | 21/100 [00:02<00:09,  8.32it/s]
+ 22%|██▏       | 22/100 [00:02<00:09,  8.06it/s]
+ 23%|██▎       | 23/100 [00:02<00:09,  8.19it/s]
+ 24%|██▍       | 24/100 [00:02<00:09,  8.12it/s]
+ 25%|██▌       | 25/100 [00:03<00:09,  8.08it/s]
+ 26%|██▌       | 26/100 [00:03<00:09,  8.10it/s]
+ 27%|██▋       | 27/100 [00:03<00:08,  8.20it/s]
+ 28%|██▊       | 28/100 [00:03<00:08,  8.13it/s]
+ 29%|██▉       | 29/100 [00:03<00:08,  8.09it/s]
+ 30%|███       | 30/100 [00:03<00:08,  8.04it/s]
+ 31%|███       | 31/100 [00:03<00:08,  7.96it/s]
+ 32%|███▏      | 32/100 [00:03<00:08,  7.91it/s]
+ 33%|███▎      | 33/100 [00:04<00:08,  7.99it/s]
+ 34%|███▍      | 34/100 [00:04<00:08,  7.93it/s]
+ 35%|███▌      | 35/100 [00:04<00:07,  8.13it/s]
+ 36%|███▌      | 36/100 [00:04<00:07,  8.17it/s]
+ 37%|███▋      | 37/100 [00:04<00:07,  8.34it/s]
+ 38%|███▊      | 38/100 [00:04<00:07,  8.24it/s]
+ 39%|███▉      | 39/100 [00:04<00:07,  8.34it/s]
+ 40%|████      | 40/100 [00:04<00:07,  8.29it/s]
+ 41%|████      | 41/100 [00:05<00:07,  8.37it/s]
+ 42%|████▏     | 42/100 [00:05<00:07,  8.26it/s]
+ 43%|████▎     | 43/100 [00:05<00:06,  8.46it/s]
+ 44%|████▍     | 44/100 [00:05<00:06,  8.52it/s]
+ 45%|████▌     | 45/100 [00:05<00:06,  8.48it/s]
+ 46%|████▌     | 46/100 [00:05<00:06,  8.38it/s]
+ 47%|████▋     | 47/100 [00:05<00:06,  8.40it/s]
+ 48%|████▊     | 48/100 [00:05<00:06,  8.34it/s]
+ 49%|████▉     | 49/100 [00:06<00:06,  8.31it/s]
+ 50%|█████     | 50/100 [00:06<00:06,  8.26it/s]
+ 51%|█████     | 51/100 [00:06<00:05,  8.20it/s]
+ 52%|█████▏    | 52/100 [00:06<00:05,  8.44it/s]
+ 53%|█████▎    | 53/100 [00:06<00:05,  8.37it/s]
+ 54%|█████▍    | 54/100 [00:06<00:05,  8.47it/s]
+ 55%|█████▌    | 55/100 [00:06<00:05,  8.36it/s]
+ 56%|█████▌    | 56/100 [00:06<00:05,  8.50it/s]
+ 57%|█████▋    | 57/100 [00:06<00:05,  8.51it/s]
+ 58%|█████▊    | 58/100 [00:07<00:05,  8.34it/s]
+ 59%|█████▉    | 59/100 [00:07<00:04,  8.47it/s]
+ 60%|██████    | 60/100 [00:07<00:04,  8.61it/s]
+ 61%|██████    | 61/100 [00:07<00:04,  8.41it/s]
+ 62%|██████▏   | 62/100 [00:07<00:04,  8.35it/s]
+ 63%|██████▎   | 63/100 [00:07<00:04,  8.30it/s]
+ 64%|██████▍   | 64/100 [00:07<00:04,  8.34it/s]
+ 65%|██████▌   | 65/100 [00:07<00:04,  8.22it/s]
+ 66%|██████▌   | 66/100 [00:08<00:04,  7.98it/s]
+ 67%|██████▋   | 67/100 [00:08<00:04,  8.15it/s]
+ 68%|██████▊   | 68/100 [00:08<00:03,  8.17it/s]
+ 69%|██████▉   | 69/100 [00:08<00:03,  8.32it/s]
+ 70%|███████   | 70/100 [00:08<00:03,  8.42it/s]
+ 71%|███████   | 71/100 [00:08<00:03,  8.34it/s]
+ 72%|███████▏  | 72/100 [00:08<00:03,  8.30it/s]
+ 73%|███████▎  | 73/100 [00:08<00:03,  7.98it/s]
+ 74%|███████▍  | 74/100 [00:09<00:03,  7.82it/s]
+ 75%|███████▌  | 75/100 [00:09<00:03,  8.06it/s]
+ 76%|███████▌  | 76/100 [00:09<00:03,  7.91it/s]
+ 77%|███████▋  | 77/100 [00:09<00:02,  8.31it/s]
+ 78%|███████▊  | 78/100 [00:09<00:02,  8.25it/s]
+ 79%|███████▉  | 79/100 [00:09<00:02,  8.34it/s]
+ 80%|████████  | 80/100 [00:09<00:02,  8.65it/s]
+ 81%|████████  | 81/100 [00:09<00:02,  8.47it/s]
+ 82%|████████▏ | 82/100 [00:09<00:02,  8.37it/s]
+ 83%|████████▎ | 83/100 [00:10<00:02,  8.49it/s]
+ 84%|████████▍ | 84/100 [00:10<00:01,  8.41it/s]
+ 85%|████████▌ | 85/100 [00:10<00:01,  8.24it/s]
+ 86%|████████▌ | 86/100 [00:10<00:01,  8.35it/s]
+ 87%|████████▋ | 87/100 [00:10<00:01,  8.12it/s]
+ 88%|████████▊ | 88/100 [00:10<00:01,  8.13it/s]
+ 89%|████████▉ | 89/100 [00:10<00:01,  8.01it/s]
+ 90%|█████████ | 90/100 [00:10<00:01,  8.19it/s]
+ 91%|█████████ | 91/100 [00:11<00:01,  8.06it/s]
+ 92%|█████████▏| 92/100 [00:11<00:00,  8.12it/s]
+ 93%|█████████▎| 93/100 [00:11<00:00,  8.08it/s]
+ 94%|█████████▍| 94/100 [00:11<00:00,  8.21it/s]
+ 95%|█████████▌| 95/100 [00:11<00:00,  8.26it/s]
+ 96%|█████████▌| 96/100 [00:11<00:00,  8.22it/s]
+ 97%|█████████▋| 97/100 [00:11<00:00,  8.23it/s]
+ 98%|█████████▊| 98/100 [00:11<00:00,  8.17it/s]
+ 99%|█████████▉| 99/100 [00:12<00:00,  8.43it/s]
+100%|██████████| 100/100 [00:12<00:00,  8.55it/s]
+100%|██████████| 100/100 [00:12<00:00,  8.22it/s]

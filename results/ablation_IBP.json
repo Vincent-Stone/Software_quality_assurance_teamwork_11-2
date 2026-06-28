@@ -1,0 +1,14 @@
+{
+  "\u03b1\u03b2-CROWN (alpha-crown)": {
+    "robust_accuracy": 100.0,
+    "avg_time": 0.48068597316741946,
+    "safe_count": 20.0,
+    "unknown_count": 0.0
+  },
+  "\u03b1\u03b2-CROWN (CROWN)": {
+    "robust_accuracy": 100.0,
+    "avg_time": 0.47519693374633787,
+    "safe_count": 20.0,
+    "unknown_count": 0.0
+  }
+}
