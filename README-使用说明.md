@@ -26,11 +26,11 @@ Software_quality_assurance_teamwork_11-2/
 │   ├── simple_training/       # CNN模型验证脚本与配置
 │   ├── spsa_training_and_train/  # SPSA训练验证脚本
 │   └── final_training/        # 最终训练验证脚本
-├── my_models/                 # 预训练模型目录（CNN模型）
+├── my_models/                 # 训练模型目录（CNN模型）
 │   ├── simple_training/       # CNN基线模型
 │   ├── final_training/        # 最终训练模型
 │   ├── spsa_training/         # SPSA训练模型
-│   ├── train/                 # 通用训练模型
+│   ├── train/                 # 通用训练模型（包含测试训练模型）
 │   └── train_with_WCIM/       # WCIM损失训练模型
 ├── auto_LiRPA/                # 边界传播计算库
 ├── complete_verifier/         # αβ-CROWN完整验证器
